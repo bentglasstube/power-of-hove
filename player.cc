@@ -3,8 +3,8 @@
 #include <cmath>
 
 Player::Player() : board_("board.png", 0, 0, kWidth, kHeight) {
-  x_ = 60;
-  y_ = 10;
+  x_ = 64;
+  y_ = 64;
 }
 
 void Player::update(const Input& input, const Map& map, unsigned int elapsed) {

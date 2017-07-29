@@ -1,21 +1,29 @@
 #include "map.h"
 
-Map::Map() : tileset_("tiles.png", 8, 16, 16) {
-  height_ = 128;
-  width_ = 1024;
+#include <iostream>
+#include <fstream>
 
-  for (int y = 0; y < height_; ++y) {
-    for (int x = 0; x < width_; ++x) {
-      tiles_[y][x] = y < 12 ? TileType::EMPTY : TileType::BLOCK;
-    }
+Map::Map() : tileset_("tiles.png", 8, 16, 16) {}
+
+Map::TileType tile_from_char(char c) {
+  switch (c) {
+    case ' ': return Map::TileType::EMPTY;
+    default: return Map::TileType::BLOCK;
   }
+}
 
-  tiles_[11][0] = tiles_[11][1023] = TileType::BLOCK;
+void Map::load(const std::string& file) {
+  std::ifstream reader("content/" + file);
 
-  for (int i = 1; i < 5; ++i) {
-    for (int j = 0; j < i; ++j) {
-      tiles_[11 - j][10 * i] = TileType::BLOCK;
+  std::string line;
+  while (reader) {
+    std::getline(reader, line);
+    const size_t l = line.length();
+    if (width_ == 0) width_ = l;
+    for (size_t i = 0; i < l; ++i) {
+      tiles_[height_][i] = tile_from_char(line[i]);
     }
+    ++height_;
   }
 }
 

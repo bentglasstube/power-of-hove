@@ -2,6 +2,7 @@
 
 void LevelScreen::init() {
   text_.reset(new Text("text.png"));
+  map_.load("test.lvl");
 }
 
 bool LevelScreen::update(const Input& input, Audio&, unsigned int elapsed) {

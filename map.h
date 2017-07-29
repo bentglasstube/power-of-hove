@@ -17,6 +17,7 @@ class Map {
 
     Map();
 
+    void load(const std::string& file);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
 
     Tile tile(double x, double y) const;
