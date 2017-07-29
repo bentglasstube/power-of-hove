@@ -1,10 +1,8 @@
 #include "player.h"
 
 #include <cmath>
-#include <iostream>
-#include <sstream>
 
-Player::Player() : board_("board.png", 0, 0, kWidth, kHeight), text_("text.png") {
+Player::Player() : board_("board.png", 0, 0, kWidth, kHeight) {
   x_ = 60;
   y_ = 10;
 }
@@ -62,12 +60,8 @@ void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
       };
   graphics.draw_rect(&vr, 0x0000ffff, false);
 
-  graphics.draw_rect(&col_, 0xff0000ff, false);
-
-  std::ostringstream msg;
-  msg << "p: (" << x_ << ", " << y_ << ")\n";
-  msg << "v: (" << vx_ << ", " << vy_ << ")\n";
-  text_.draw(graphics, msg.str(), 8, 8);
+  const SDL_Rect cr { col_.x - xoffset, col_.y - yoffset, col_.w, col_.h };
+  graphics.draw_rect(&cr, 0xff0000ff, false);
 }
 
 double Player::posx() const {
@@ -92,7 +86,6 @@ void Player::stop_moving() {
 
 void Player::jump() {
   vy_ -= kJump;
-  std::cerr << "Jumping\n";
 }
 
 void Player::updatex(const Map& map, unsigned int elapsed) {

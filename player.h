@@ -6,7 +6,6 @@
 
 #include "map.h"
 #include "rect.h"
-#include "text.h"
 
 class Player {
   public:
@@ -36,7 +35,6 @@ class Player {
     static constexpr int kHeight = 16;
 
     Sprite board_;
-    Text text_;
 
     double power_;
     double x_, y_, vx_, vy_, ax_;

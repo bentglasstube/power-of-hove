@@ -82,7 +82,6 @@ cc_library(
         "@libgam//:graphics",
         "@libgam//:input",
         "@libgam//:sprite",
-        "@libgam//:text",
         ":map",
         ":rect",
     ],

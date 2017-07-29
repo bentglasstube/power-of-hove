@@ -1,7 +1,5 @@
 #include "map.h"
 
-#include <iostream>
-
 Map::Map() : tileset_("tiles.png", 8, 16, 16) {
   height_ = 128;
   width_ = 1024;
@@ -63,7 +61,6 @@ Map::Tile Map::collision(Rect r, double dx, double dy) const {
 
   if (dy != 0) {
     const int y = (int) ((dy < 0 ? r.top : r.bottom) + dy) / kTileSize;
-    std::cerr << "Checking tiles row " << y << "\n";
     return check_tiles((int) r.left / kTileSize, (int) r.right / kTileSize, y, y);
   }
 
