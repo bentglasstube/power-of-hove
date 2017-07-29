@@ -7,8 +7,20 @@ void LevelScreen::init() {
 }
 
 bool LevelScreen::update(const Input& input, Audio&, unsigned int elapsed) {
+  if (input.key_held(SDL_SCANCODE_A)) {
+    player_.move_left();
+  } else if (input.key_held(SDL_SCANCODE_D)) {
+    player_.move_right();
+  } else {
+    player_.stop_moving();
+  }
+
+  if (input.key_pressed(SDL_SCANCODE_SPACE)) {
+    player_.jump();
+  }
+
   camera_.update(player_, map_, elapsed);
-  player_.update(input, map_, elapsed);
+  player_.update(map_, elapsed);
   return true;
 }
 

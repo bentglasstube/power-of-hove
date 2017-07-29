@@ -13,7 +13,7 @@ class Player {
 
     Player();
 
-    void update(const Input& input, const Map& map, unsigned int elapsed);
+    void update(const Map& map, unsigned int elapsed);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
     void draw_power(Graphics& graphics, int x, int y) const;
 

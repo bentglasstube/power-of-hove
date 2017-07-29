@@ -10,20 +10,7 @@ Player::Player() :
   max_power_(100), power_(max_power_), x_(64), y_(64)
 {}
 
-void Player::update(const Input& input, const Map& map, unsigned int elapsed) {
-  // TODO move to screen class
-  if (input.key_held(SDL_SCANCODE_A)) {
-    move_left();
-  } else if (input.key_held(SDL_SCANCODE_D)) {
-    move_right();
-  } else {
-    stop_moving();
-  }
-
-  if (input.key_pressed(SDL_SCANCODE_SPACE)) {
-    jump();
-  }
-
+void Player::update(const Map& map, unsigned int elapsed) {
   updatex(map, elapsed);
   updatey(map, elapsed);
 
