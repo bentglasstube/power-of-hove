@@ -1,12 +1,9 @@
 #include "camera.h"
 
-#include <algorithm>
-
-double window(double min, double max, double focus, double size) {
-  double target = focus - size / 2;
-  if (target < min) return min;
-  if (target > max - size) return max - size;
-  return target;
+double bound(double min, double value, double max) {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
 }
 
 Camera::Camera() {}
@@ -14,22 +11,19 @@ Camera::Camera() {}
 void Camera::update(const Player& player, const Map& map, unsigned int elapsed) {
   const double px = player.posx();
   const double py = player.posy();
+  const double delta = kMaxSpeed * elapsed;
 
-  double tx = window(0, map.pixel_width(), px, kWidth);
-  if (ox_ > tx) ox_ = std::max(ox_ - kMaxSpeed * elapsed, tx);
-  if (ox_ < tx) ox_ = std::min(ox_ + kMaxSpeed * elapsed, tx);
-
-  if (player.on_ground()) {
-    double ty = window(0, map.pixel_height(), py - kHeight / 3, kHeight);
-    if (oy_ > ty) oy_ = std::max(oy_ - kMaxSpeed * elapsed, ty);
-    if (oy_ < ty) oy_ = std::min(oy_ + kMaxSpeed * elapsed, ty);
-  }
+  // try to keep the player centered
+  ox_ = bound(ox_ - delta, px - kWidth / 2, ox_ + delta);
+  if (player.on_ground()) oy_ = bound(oy_ - delta, py - 5 * kHeight / 6, oy_ + delta);
 
   // force camera to have player on screen
-  if (px - kBuffer < ox_) ox_ = px - kBuffer;
-  if (px + kBuffer > ox_ + kWidth) ox_ = px - kWidth + kBuffer;
-  if (py - kBuffer < oy_) oy_ = py - kBuffer;
-  if (py + kBuffer > oy_ + kHeight) oy_ = py - kHeight + kBuffer;
+  ox_ = bound(px + kBuffer - kWidth, ox_, px - kBuffer);
+  oy_ = bound(py + kBuffer - kHeight, oy_, py - kBuffer);
+
+  // force camera within bounds
+  ox_ = bound(0, ox_, map.pixel_width() - kWidth);
+  oy_ = bound(0, oy_, map.pixel_height() - kHeight);
 }
 
 double Camera::xoffset() const {
