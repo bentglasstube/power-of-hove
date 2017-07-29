@@ -18,6 +18,8 @@ class Player {
     double posx() const;
     double posy() const;
 
+    bool on_ground() const;
+
     void move_left();
     void move_right();
     void stop_moving();

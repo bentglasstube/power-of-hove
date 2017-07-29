@@ -15,7 +15,8 @@ class Camera {
     // TODO get height and width from graphics somehow
     static constexpr int kWidth = 256;
     static constexpr int kHeight = 240;
-    static constexpr double kMaxSpeed = 1.0;
+    static constexpr int kBuffer = 16;
+    static constexpr double kMaxSpeed = 0.3;
 
     double ox_, oy_;
 };

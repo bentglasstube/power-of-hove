@@ -72,6 +72,10 @@ double Player::posy() const {
   return y_;
 }
 
+bool Player::on_ground() const {
+  return vy_ == 0;
+}
+
 void Player::move_left() {
   ax_ = -kAccel;
 }
@@ -85,7 +89,7 @@ void Player::stop_moving() {
 }
 
 void Player::jump() {
-  vy_ -= kJump;
+  if (on_ground()) vy_ -= kJump;
 }
 
 void Player::updatex(const Map& map, unsigned int elapsed) {
