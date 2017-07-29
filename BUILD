@@ -68,6 +68,7 @@ cc_library(
         "@libgam//:screen",
         "@libgam//:sprite",
         "@libgam//:text",
+        ":camera",
         ":map",
         ":player",
     ],
@@ -102,4 +103,14 @@ cc_library(
     name = "rect",
     srcs = ["rect.cc"],
     hdrs = ["rect.h"],
+)
+
+cc_library(
+    name = "camera",
+    srcs = ["camera.cc"],
+    hdrs = ["camera.h"],
+    deps = [
+        ":map",
+        ":player",
+    ],
 )

@@ -5,13 +5,17 @@ void LevelScreen::init() {
 }
 
 bool LevelScreen::update(const Input& input, Audio&, unsigned int elapsed) {
+  camera_.update(player_, map_, elapsed);
   player_.update(input, map_, elapsed);
   return true;
 }
 
 void LevelScreen::draw(Graphics& graphics) const {
-  map_.draw(graphics, 0, 0);
-  player_.draw(graphics, 0, 0);
+  const double cx = camera_.xoffset();
+  const double cy = camera_.yoffset();
+
+  map_.draw(graphics, cx, cy);
+  player_.draw(graphics, cx, cy);
 }
 
 Screen* LevelScreen::next_screen() {

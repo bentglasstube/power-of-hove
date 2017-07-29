@@ -8,6 +8,7 @@
 #include "sprite.h"
 #include "text.h"
 
+#include "camera.h"
 #include "map.h"
 #include "player.h"
 
@@ -25,6 +26,7 @@ class LevelScreen : public Screen {
 
     std::unique_ptr<Text> text_;
 
+    Camera camera_;
     Map map_;
     Player player_;
 };

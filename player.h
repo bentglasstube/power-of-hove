@@ -16,6 +16,9 @@ class Player {
     void update(const Input& input, const Map& map, unsigned int elapsed);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
 
+    double posx() const;
+    double posy() const;
+
     void move_left();
     void move_right();
     void stop_moving();

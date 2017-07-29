@@ -21,6 +21,8 @@ class Map {
 
     Tile tile(double x, double y) const;
     Tile collision(Rect box, double dx, double dy) const;
+    int pixel_width() const;
+    int pixel_height() const;
 
   private:
 

@@ -70,6 +70,14 @@ void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
   text_.draw(graphics, msg.str(), 8, 8);
 }
 
+double Player::posx() const {
+  return x_;
+}
+
+double Player::posy() const {
+  return y_;
+}
+
 void Player::move_left() {
   ax_ = -kAccel;
 }

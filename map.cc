@@ -70,6 +70,14 @@ Map::Tile Map::collision(Rect r, double dx, double dy) const {
   return kNullTile;
 }
 
+int Map::pixel_width() const {
+  return width_ * kTileSize;
+}
+
+int Map::pixel_height() const {
+  return height_ * kTileSize;
+}
+
 Map::Tile Map::check_tiles(int x1, int x2, int y1, int y2) const {
   for (int y = y1; y <= y2; ++y) {
     for (int x = x1; x <= x2; ++x) {
