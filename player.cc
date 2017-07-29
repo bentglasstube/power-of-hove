@@ -39,9 +39,10 @@ void Player::update(const Input& input, const Map& map, unsigned int elapsed) {
 
 void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
   const int x = x_ - kHalfWidth - xoffset;
-  const int y = y_ - kHeight - yoffset /* + 3 * std::sin(frames_ / 150.0) */ ;
+  const int y = y_ - kHeight - yoffset + 3 * std::sin(frames_ / 150.0);
   board_.draw(graphics, x, y);
 
+#ifndef NDEBUG
   const Rect h = boxh();
   const SDL_Rect hr {
       (int)(h.left - xoffset),
@@ -62,6 +63,7 @@ void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
 
   const SDL_Rect cr { col_.x - xoffset, col_.y - yoffset, col_.w, col_.h };
   graphics.draw_rect(&cr, 0xff0000ff, false);
+#endif
 }
 
 double Player::posx() const {
@@ -110,7 +112,12 @@ void Player::updatey(const Map& map, unsigned int elapsed) {
 
   Map::Tile tile = map.collision(boxv(), 0, vy_ * elapsed);
   if (tile.obstruction) {
-    col_ = { tile.left, tile.top, tile.right - tile.left, tile.bottom - tile.top };
+    col_ = {
+      (int) tile.left,
+      (int) tile.top,
+      (int) (tile.right - tile.left),
+      (int) (tile.bottom - tile.top)
+    };
     if (vy_ > 0) {
       y_ = tile.top;
     } else {
