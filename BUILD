@@ -26,6 +26,7 @@ cc_binary(
     srcs = ["main.cc"],
     deps = [
         "@libgam//:game",
+        ":title_screen",
     ],
 )
 
@@ -44,4 +45,61 @@ pkg_tar(
         ":ld39",
         "//content",
     ],
+)
+
+cc_library(
+    name = "title_screen",
+    srcs = ["title_screen.cc"],
+    hdrs = ["title_screen.h"],
+    deps = [
+        "@libgam//:backdrop",
+        "@libgam//:screen",
+        "@libgam//:sprite",
+        "@libgam//:text",
+        ":level_screen",
+    ],
+)
+
+cc_library(
+    name = "level_screen",
+    srcs = ["level_screen.cc"],
+    hdrs = ["level_screen.h"],
+    deps = [
+        "@libgam//:screen",
+        "@libgam//:sprite",
+        "@libgam//:text",
+        ":map",
+        ":player",
+    ],
+)
+
+cc_library(
+    name = "player",
+    srcs = ["player.cc"],
+    hdrs = ["player.h"],
+    deps = [
+        "@libgam//:graphics",
+        "@libgam//:input",
+        "@libgam//:sprite",
+        "@libgam//:text",
+        ":map",
+        ":rect",
+    ],
+)
+
+cc_library(
+    name = "map",
+    srcs = ["map.cc"],
+    hdrs = ["map.h"],
+    deps = [
+        "@libgam//:graphics",
+        "@libgam//:spritemap",
+        ":rect",
+    ],
+)
+
+cc_library(
+    name = "rect",
+    srcs = ["rect.cc"],
+    hdrs = ["rect.h"],
 )

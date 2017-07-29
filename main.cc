@@ -1,5 +1,7 @@
 #include "game.h"
 
+#include "title_screen.h"
+
 int main(int, char**) {
   Game::Config config;
 
@@ -9,7 +11,7 @@ int main(int, char**) {
   config.graphics.fullscreen = true;
 
   Game game(config);
-  game.loop(nullptr);
+  game.loop(new TitleScreen());
 
   return 0;
 }
