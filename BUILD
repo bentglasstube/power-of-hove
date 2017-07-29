@@ -66,7 +66,6 @@ cc_library(
     hdrs = ["level_screen.h"],
     deps = [
         "@libgam//:screen",
-        "@libgam//:sprite",
         "@libgam//:text",
         ":camera",
         ":map",
@@ -83,6 +82,7 @@ cc_library(
         "@libgam//:graphics",
         "@libgam//:input",
         "@libgam//:sprite",
+        "@libgam//:spritemap",
         ":map",
         ":rect",
     ],

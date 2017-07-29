@@ -19,6 +19,8 @@ void LevelScreen::draw(Graphics& graphics) const {
   backdrop_->draw(graphics, cx, cy);
   map_.draw(graphics, cx, cy);
   player_.draw(graphics, cx, cy);
+
+  player_.draw_power(graphics, 0, 0);
 }
 
 Screen* LevelScreen::next_screen() {

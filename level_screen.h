@@ -5,7 +5,6 @@
 #include "audio.h"
 #include "graphics.h"
 #include "screen.h"
-#include "sprite.h"
 #include "text.h"
 
 #include "camera.h"

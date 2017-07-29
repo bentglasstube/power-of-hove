@@ -1,11 +1,17 @@
 #include "player.h"
 
+#include <algorithm>
 #include <cmath>
+#include <iostream>
 
-Player::Player() : board_("board.png", 0, 0, kWidth, kHeight), power_(100), x_(64), y_(64) {}
+Player::Player() :
+  board_("board.png", 0, 0, kWidth, kHeight),
+  cells_("power.png", 7, 8, 8),
+  max_power_(100), power_(max_power_), x_(64), y_(64)
+{}
 
 void Player::update(const Input& input, const Map& map, unsigned int elapsed) {
-  // TODO check if inputs are being pressed to control board
+  // TODO move to screen class
   if (input.key_held(SDL_SCANCODE_A)) {
     move_left();
   } else if (input.key_held(SDL_SCANCODE_D)) {
@@ -21,22 +27,24 @@ void Player::update(const Input& input, const Map& map, unsigned int elapsed) {
   updatex(map, elapsed);
   updatey(map, elapsed);
 
-  // TODO calculate power drain
-  // double drain = 0.001;
-  // if jumping, use more, etc
-
-  // TODO cap acceleration
-
-  // some kind of shitty friction / air resistance?
+  // Shitty "friction"
   vx_ *= kDampen;
   vy_ *= kDampen;
+
+  if (power_ > 0) {
+    power_ -= kIdleCost * elapsed;
+  } else {
+    vx_ *= kDampen * kDampen;
+  }
 
   frames_ += elapsed;
 }
 
 void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
+  const int yo = power_ > 0 ? 3 * std::sin(frames_ / 150.0) : 5;
+
   const int x = x_ - kHalfWidth - xoffset;
-  const int y = y_ - kHeight - yoffset + 3 * std::sin(frames_ / 150.0);
+  const int y = y_ - kHeight - yoffset + yo;
   board_.draw(graphics, x, y);
 
 #ifndef NDEBUG
@@ -61,6 +69,14 @@ void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
   const SDL_Rect cr { col_.x - xoffset, col_.y - yoffset, col_.w, col_.h };
   graphics.draw_rect(&cr, 0xff0000ff, false);
 #endif
+}
+
+void Player::draw_power(Graphics& graphics, int x, int y) const {
+  const int cells = std::ceil(max_power_ / kCellSize);
+  for (int i = 0; i < cells; ++i) {
+    const int c = std::max(0, std::min(6, (int) (6 * (power_ - i * kCellSize) / kCellSize)));
+    cells_.draw(graphics, c, 8 * i, y);
+  }
 }
 
 double Player::posx() const {
@@ -88,11 +104,15 @@ void Player::stop_moving() {
 }
 
 void Player::jump() {
-  if (on_ground()) vy_ -= kJump;
+  if (on_ground() && power_ > kJumpCost) {
+    vy_ -= kJumpSpeed;
+    power_ -= kJumpCost;
+    // TODO play jump sound
+  }
 }
 
 void Player::updatex(const Map& map, unsigned int elapsed) {
-  vx_ += ax_ * elapsed;
+  if (power_ > 0) vx_ += ax_ * elapsed;
 
   Map::Tile tile = map.collision(boxh(), vx_ * elapsed, 0);
   if (tile.obstruction) {
