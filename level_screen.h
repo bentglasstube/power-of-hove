@@ -10,6 +10,7 @@
 
 #include "camera.h"
 #include "map.h"
+#include "parallax_backdrop.h"
 #include "player.h"
 
 class LevelScreen : public Screen {
@@ -25,6 +26,7 @@ class LevelScreen : public Screen {
   private:
 
     std::unique_ptr<Text> text_;
+    std::unique_ptr<ParallaxBackdrop> backdrop_;
 
     Camera camera_;
     Map map_;

@@ -2,6 +2,7 @@
 
 void LevelScreen::init() {
   text_.reset(new Text("text.png"));
+  backdrop_.reset(new ParallaxBackdrop("backdrop1.png", 6));
   map_.load("test.lvl");
 }
 
@@ -15,6 +16,7 @@ void LevelScreen::draw(Graphics& graphics) const {
   const double cx = camera_.xoffset();
   const double cy = camera_.yoffset();
 
+  backdrop_->draw(graphics, cx, cy);
   map_.draw(graphics, cx, cy);
   player_.draw(graphics, cx, cy);
 }

@@ -2,10 +2,7 @@
 
 #include <cmath>
 
-Player::Player() : board_("board.png", 0, 0, kWidth, kHeight) {
-  x_ = 64;
-  y_ = 64;
-}
+Player::Player() : board_("board.png", 0, 0, kWidth, kHeight), power_(100), x_(64), y_(64) {}
 
 void Player::update(const Input& input, const Map& map, unsigned int elapsed) {
   // TODO check if inputs are being pressed to control board

@@ -70,6 +70,7 @@ cc_library(
         "@libgam//:text",
         ":camera",
         ":map",
+        ":parallax_backdrop",
         ":player",
     ],
 )
@@ -111,5 +112,14 @@ cc_library(
     deps = [
         ":map",
         ":player",
+    ],
+)
+
+cc_library(
+    name = "parallax_backdrop",
+    srcs = ["parallax_backdrop.cc"],
+    hdrs = ["parallax_backdrop.h"],
+    deps = [
+        "@libgam//:graphics",
     ],
 )
