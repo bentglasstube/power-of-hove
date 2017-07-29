@@ -40,7 +40,8 @@ Map::Tile Map::tile(double x, double y) const {
 }
 
 Map::Tile Map::itile(int x, int y) const {
-  TileType t = tiles_[y][x];
+  const bool oob = x < 0 || x >= width_ || y < 0 || y >= height_;
+  TileType t = oob ? TileType::BLOCK : tiles_[y][x];
 
   Tile tile;
   tile.type = t;
