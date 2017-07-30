@@ -7,7 +7,6 @@
 #include "graphics.h"
 #include "input.h"
 #include "screen.h"
-#include "sprite.h"
 #include "text.h"
 
 class TitleScreen : public Screen {
@@ -24,6 +23,4 @@ class TitleScreen : public Screen {
 
     std::unique_ptr<Text> text_;
     std::unique_ptr<Backdrop> backdrop_;
-    std::unique_ptr<Sprite> board_;
-    unsigned int frames_;
 };

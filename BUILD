@@ -54,7 +54,6 @@ cc_library(
     deps = [
         "@libgam//:backdrop",
         "@libgam//:screen",
-        "@libgam//:sprite",
         "@libgam//:text",
         ":level_screen",
     ],
