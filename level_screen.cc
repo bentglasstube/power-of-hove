@@ -1,12 +1,14 @@
 #include "level_screen.h"
 
+#include <iostream>
+
 void LevelScreen::init() {
   text_.reset(new Text("text.png"));
   backdrop_.reset(new ParallaxBackdrop("backdrop1.png", 6));
   map_.load("test.lvl");
 }
 
-bool LevelScreen::update(const Input& input, Audio&, unsigned int elapsed) {
+bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (input.key_held(SDL_SCANCODE_A)) {
     player_.move_left();
   } else if (input.key_held(SDL_SCANCODE_D)) {
@@ -16,11 +18,11 @@ bool LevelScreen::update(const Input& input, Audio&, unsigned int elapsed) {
   }
 
   if (input.key_pressed(SDL_SCANCODE_SPACE)) {
-    player_.jump();
+    player_.jump(audio);
   }
 
+  player_.update(audio, map_, elapsed);
   camera_.update(player_, map_, elapsed);
-  player_.update(map_, elapsed);
   return true;
 }
 

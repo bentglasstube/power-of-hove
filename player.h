@@ -1,5 +1,6 @@
 #pragma once
 
+#include "audio.h"
 #include "input.h"
 #include "graphics.h"
 #include "sprite.h"
@@ -13,7 +14,7 @@ class Player {
 
     Player();
 
-    void update(const Map& map, unsigned int elapsed);
+    void update(Audio& audio, const Map& map, unsigned int elapsed);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
     void draw_power(Graphics& graphics, int x, int y) const;
 
@@ -25,7 +26,7 @@ class Player {
     void move_left();
     void move_right();
     void stop_moving();
-    void jump();
+    void jump(Audio& audio);
 
   private:
 
@@ -55,8 +56,9 @@ class Player {
     SDL_Rect col_;
 #endif
 
-    void updatex(const Map& map, unsigned int elapsed);
-    void updatey(const Map& map, unsigned int elapsed);
+    void updatex(Audio& audio, const Map& map, unsigned int elapsed);
+    void updatey(Audio& audio, const Map& map, unsigned int elapsed);
+    void drain(Audio& audio, double amount);
 
     Rect boxh() const;
     Rect boxv() const;

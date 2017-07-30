@@ -10,16 +10,16 @@ Player::Player() :
   max_power_(100), power_(max_power_), x_(64), y_(64)
 {}
 
-void Player::update(const Map& map, unsigned int elapsed) {
-  updatex(map, elapsed);
-  updatey(map, elapsed);
+void Player::update(Audio& audio, const Map& map, unsigned int elapsed) {
+  updatex(audio, map, elapsed);
+  updatey(audio, map, elapsed);
 
   // Shitty "friction"
   vx_ *= kDampen;
   vy_ *= kDampen;
 
   if (power_ > 0) {
-    power_ -= kIdleCost * elapsed;
+    drain(audio, kIdleCost * elapsed);
   } else {
     vx_ *= kDampen * kDampen;
   }
@@ -91,19 +91,19 @@ void Player::stop_moving() {
   ax_ = 0;
 }
 
-void Player::jump() {
+void Player::jump(Audio& audio) {
   if (on_ground() && power_ > kJumpCost) {
     vy_ -= kJumpSpeed;
-    power_ -= kJumpCost;
-    // TODO play jump sound
+    drain(audio, kJumpCost);
   }
 }
 
-void Player::updatex(const Map& map, unsigned int elapsed) {
+void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
   if (power_ > 0) vx_ += ax_ * elapsed;
 
   Map::Tile tile = map.collision(boxh(), vx_ * elapsed, 0);
   if (tile.obstruction) {
+    if (std::abs(vx_) > 0.1) audio.play_sample("bump.wav");
     if (vx_ > 0) x_ = tile.left - kHalfWidth;
     else x_ = tile.right + kHalfWidth;
     vx_ = -vx_;
@@ -112,7 +112,7 @@ void Player::updatex(const Map& map, unsigned int elapsed) {
   }
 }
 
-void Player::updatey(const Map& map, unsigned int elapsed) {
+void Player::updatey(Audio& audio, const Map& map, unsigned int elapsed) {
   vy_ += kGravity * elapsed;
 
   Map::Tile tile = map.collision(boxv(), 0, vy_ * elapsed);
@@ -133,6 +133,17 @@ void Player::updatey(const Map& map, unsigned int elapsed) {
     vy_ = 0;
   } else {
     y_ += vy_ * elapsed;
+  }
+}
+
+void Player::drain(Audio& audio, double amount) {
+  const int c1 = (int) (power_ / kCellSize);
+  power_ -= amount;
+  const int c2 = (int) (power_ / kCellSize);
+  if (power_ < 0) {
+    audio.play_sample("powerloss.wav");
+  } else if (c2 < c1) {
+    audio.play_sample("drain.wav");
   }
 }
 

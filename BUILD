@@ -78,6 +78,7 @@ cc_library(
     srcs = ["player.cc"],
     hdrs = ["player.h"],
     deps = [
+        "@libgam//:audio",
         "@libgam//:graphics",
         "@libgam//:input",
         "@libgam//:sprite",
