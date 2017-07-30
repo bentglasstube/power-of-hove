@@ -44,7 +44,7 @@ class Player {
     static constexpr int kHeight = 16;
     static constexpr int kCellSize = 25;
 
-    enum class Facing { RIGHT, LEFT };
+    enum class Facing { Right, Left };
 
     Sprite board_;
     SpriteMap cells_;

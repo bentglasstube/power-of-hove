@@ -5,6 +5,9 @@
 
 Map::Map() : tileset_("tiles.png", 8, 16, 16) {}
 
+#define SET_TILE(t) tiles_[height_][x] = TileType::t
+#define ADD_ITEM(i) items_.emplace_back(Item::ItemType::i, kTileSize * x + kTileSize / 2, kTileSize * height_ + kTileSize / 2)
+
 void Map::load(const std::string& file) {
   std::ifstream reader("content/" + file);
 
@@ -16,21 +19,37 @@ void Map::load(const std::string& file) {
     for (size_t x = 0; x < l; ++x) {
       switch (line[x]) {
         case ' ':
-          tiles_[height_][x] = TileType::EMPTY;
+          SET_TILE(Empty);
           break;
 
         case '+':
-          tiles_[height_][x] = TileType::EMPTY;
-          items_.emplace_back(Item::ItemType::BATTERY, kTileSize * x + kTileSize / 2, kTileSize * height_ + kTileSize / 2);
+          SET_TILE(Empty);
+          ADD_ITEM(Battery);
           break;
 
         case '*':
-          tiles_[height_][x] = TileType::EMPTY;
-          items_.emplace_back(Item::ItemType::PLUTONIUM, kTileSize * x + kTileSize / 2, kTileSize * height_ + kTileSize / 2);
+          SET_TILE(Empty);
+          ADD_ITEM(Plutonium);
+          break;
+
+        case '^':
+          SET_TILE(SpikeBottom);
+          break;
+
+        case 'v':
+          SET_TILE(SpikeTop);
+          break;
+
+        case '>':
+          SET_TILE(SpikeLeft);
+          break;
+
+        case '<':
+          SET_TILE(SpikeRight);
           break;
 
         default:
-          tiles_[height_][x] = TileType::BLOCK;
+          SET_TILE(Block);
           break;
       }
     }
@@ -92,11 +111,11 @@ Map::Tile Map::tile(double x, double y) const {
 
 Map::Tile Map::itile(int x, int y) const {
   const bool oob = x < 0 || x >= width_ || y < 0 || y >= height_;
-  TileType t = oob ? TileType::BLOCK : tiles_[y][x];
+  TileType t = oob ? TileType::Block : tiles_[y][x];
 
   Tile tile;
   tile.type = t;
-  tile.obstruction = t == TileType::BLOCK;
+  tile.obstruction = t >= TileType::Block && t <= TileType::SpikeRight;
   tile.top = y * kTileSize;
   tile.left = x * kTileSize;
   tile.right = tile.left + kTileSize;

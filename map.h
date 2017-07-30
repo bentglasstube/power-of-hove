@@ -11,7 +11,7 @@
 class Map {
   public:
 
-    enum class TileType { BLOCK, EMPTY };
+    enum class TileType { Empty, Block, SpikeBottom, SpikeTop, SpikeLeft, SpikeRight };
 
     struct Tile {
       TileType type;

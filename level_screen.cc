@@ -27,12 +27,12 @@ bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed)
   const Item* i = map_.item(player_.xpos(), player_.ypos());
   if (i) {
     switch (i->type()) {
-      case Item::ItemType::BATTERY:
+      case Item::ItemType::Battery:
         player_.add_power();
         audio.play_sample("battery.wav");
         break;
 
-      case Item::ItemType::PLUTONIUM:
+      case Item::ItemType::Plutonium:
         // TODO add a plutonium
         audio.play_sample("plutonium.wav");
         break;

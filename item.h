@@ -6,7 +6,7 @@
 class Item {
   public:
 
-    enum class ItemType { BATTERY, PLUTONIUM };
+    enum class ItemType { Battery, Plutonium };
 
     Item(ItemType type, double x, double y);
 

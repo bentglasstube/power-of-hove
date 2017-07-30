@@ -31,7 +31,7 @@ void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
 
   const int x = x_ - kHalfWidth - xoffset;
   const int y = y_ - kHeight - yoffset + yo;
-  board_.draw_ex(graphics, x, y, facing_ == Facing::LEFT, 0, 0, 0);
+  board_.draw_ex(graphics, x, y, facing_ == Facing::Left, 0, 0, 0);
 
 #ifndef NDEBUG
   const Rect h = boxh();
@@ -78,12 +78,12 @@ bool Player::on_ground() const {
 }
 
 void Player::move_left() {
-  facing_ = Facing::LEFT;
+  facing_ = Facing::Left;
   ax_ = -kAccel;
 }
 
 void Player::move_right() {
-  facing_ = Facing::RIGHT;
+  facing_ = Facing::Right;
   ax_ = kAccel;
 }
 
