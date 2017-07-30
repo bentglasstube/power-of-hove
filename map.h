@@ -24,6 +24,9 @@ class Map {
     void load(const std::string& file);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
 
+    const Item* item(double x, double y) const;
+    void remove_item(const Item* item);
+
     Tile tile(double x, double y) const;
     Tile collision(Rect box, double dx, double dy) const;
     int pixel_width() const;

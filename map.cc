@@ -21,12 +21,12 @@ void Map::load(const std::string& file) {
 
         case '+':
           tiles_[height_][x] = TileType::EMPTY;
-          items_.emplace_back(Item::ItemType::BATTERY, kTileSize * x, kTileSize * height_);
+          items_.emplace_back(Item::ItemType::BATTERY, kTileSize * x + kTileSize / 2, kTileSize * height_ + kTileSize / 2);
           break;
 
         case '*':
           tiles_[height_][x] = TileType::EMPTY;
-          items_.emplace_back(Item::ItemType::PLUTONIUM, kTileSize * x, kTileSize * height_);
+          items_.emplace_back(Item::ItemType::PLUTONIUM, kTileSize * x + kTileSize / 2, kTileSize * height_ + kTileSize / 2);
           break;
 
         default:
@@ -61,6 +61,28 @@ void Map::draw(Graphics& graphics, int xoffset, int yoffset) const {
     if (gy < -kTileSize || gy > graphics.height()) continue;
 
     item.draw(graphics, gx, gy);
+  }
+}
+
+const Item* Map::item(double x, double y) const {
+  for (const auto& item : items_) {
+    const double dx = item.xpos() - x;
+    const double dy = item.ypos() - y;
+    const double d2 = dx * dx + dy * dy;
+    if (d2 < kTileSize * kTileSize) return &item;
+  }
+  return nullptr;
+}
+
+void Map::remove_item(const Item* item) {
+  auto i = items_.begin();
+  while (i != items_.end()) {
+    if (*item == *i) {
+      i = items_.erase(i);
+      break;
+    } else {
+      i = std::next(i);
+    }
   }
 }
 

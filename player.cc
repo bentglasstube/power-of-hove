@@ -98,6 +98,10 @@ void Player::jump(Audio& audio) {
   }
 }
 
+void Player::add_power() {
+  power_ = std::min(max_power_, power_ + kCellSize);
+}
+
 void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
   if (power_ > 0) vx_ += ax_ * elapsed;
 

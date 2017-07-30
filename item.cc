@@ -13,7 +13,7 @@ void Item::draw(Graphics& graphics, int x, int y) const {
   const int f = SDL_GetTicks();
   const int yo = 3 * std::sin(f / 200.0);
   const int n = (f / 100 % 8) + static_cast<int>(type_) * 8;
-  sprites_.draw(graphics, n, x, y + yo);
+  sprites_.draw(graphics, n, x - 4, y + yo - 4);
 }
 
 Item::ItemType Item::type() const {
@@ -26,4 +26,8 @@ double Item::xpos() const {
 
 double Item::ypos() const {
   return y_;
+}
+
+bool Item::operator==(const Item& other) const {
+  return other.xpos() == x_ && other.ypos() == y_;
 }

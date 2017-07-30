@@ -27,6 +27,7 @@ class Player {
     void move_right();
     void stop_moving();
     void jump(Audio& audio);
+    void add_power();
 
   private:
 

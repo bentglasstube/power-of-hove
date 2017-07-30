@@ -23,6 +23,24 @@ bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed)
 
   player_.update(audio, map_, elapsed);
   camera_.update(player_, map_, elapsed);
+
+  const Item* i = map_.item(player_.xpos(), player_.ypos());
+  if (i) {
+    switch (i->type()) {
+      case Item::ItemType::BATTERY:
+        player_.add_power();
+        audio.play_sample("battery.wav");
+        break;
+
+      case Item::ItemType::PLUTONIUM:
+        // TODO add a plutonium
+        audio.play_sample("plutonium.wav");
+        break;
+    }
+
+    map_.remove_item(i);
+  }
+
   return true;
 }
 

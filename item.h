@@ -15,6 +15,8 @@ class Item {
     double xpos() const;
     double ypos() const;
 
+    bool operator==(const Item& other) const;
+
   private:
 
     SpriteMap sprites_;
