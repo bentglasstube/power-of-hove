@@ -5,13 +5,6 @@
 
 Map::Map() : tileset_("tiles.png", 8, 16, 16) {}
 
-Map::TileType tile_from_char(char c) {
-  switch (c) {
-    case ' ': return Map::TileType::EMPTY;
-    default: return Map::TileType::BLOCK;
-  }
-}
-
 void Map::load(const std::string& file) {
   std::ifstream reader("content/" + file);
 
@@ -20,8 +13,26 @@ void Map::load(const std::string& file) {
     std::getline(reader, line);
     const size_t l = line.length();
     if (width_ == 0) width_ = l;
-    for (size_t i = 0; i < l; ++i) {
-      tiles_[height_][i] = tile_from_char(line[i]);
+    for (size_t x = 0; x < l; ++x) {
+      switch (line[x]) {
+        case ' ':
+          tiles_[height_][x] = TileType::EMPTY;
+          break;
+
+        case '+':
+          tiles_[height_][x] = TileType::EMPTY;
+          items_.emplace_back(Item::ItemType::BATTERY, kTileSize * x, kTileSize * height_);
+          break;
+
+        case '*':
+          tiles_[height_][x] = TileType::EMPTY;
+          items_.emplace_back(Item::ItemType::PLUTONIUM, kTileSize * x, kTileSize * height_);
+          break;
+
+        default:
+          tiles_[height_][x] = TileType::BLOCK;
+          break;
+      }
     }
     ++height_;
   }
@@ -40,6 +51,16 @@ void Map::draw(Graphics& graphics, int xoffset, int yoffset) const {
 
       tileset_.draw(graphics, static_cast<int>(tiles_[y][x]), gx, gy);
     }
+  }
+
+  for (const auto& item : items_) {
+    const int gx = item.xpos() - xoffset;
+    const int gy = item.ypos() - yoffset;
+
+    if (gx < -kTileSize || gx > graphics.width()) continue;
+    if (gy < -kTileSize || gy > graphics.height()) continue;
+
+    item.draw(graphics, gx, gy);
   }
 }
 

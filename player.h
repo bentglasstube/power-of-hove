@@ -47,7 +47,6 @@ class Player {
 
     double max_power_, power_;
     double x_, y_, vx_, vy_, ax_;
-    unsigned int frames_;
     SDL_Rect col_;
 
     void updatex(const Map& map, unsigned int elapsed);

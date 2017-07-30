@@ -1,8 +1,12 @@
 #pragma once
 
+#include <vector>
+
 #include "graphics.h"
-#include "rect.h"
 #include "spritemap.h"
+
+#include "item.h"
+#include "rect.h"
 
 class Map {
   public:
@@ -33,6 +37,7 @@ class Map {
     SpriteMap tileset_;
     int width_, height_;
     TileType tiles_[128][1024];
+    std::vector<Item> items_;
 
     Tile itile(int x, int y) const;
     Tile check_tiles(int x1, int x2, int y1, int y2) const;
