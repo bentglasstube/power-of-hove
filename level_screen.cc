@@ -4,8 +4,9 @@
 
 void LevelScreen::init() {
   text_.reset(new Text("text.png"));
-  backdrop_.reset(new ParallaxBackdrop("backdrop1.png", 6));
+  backdrop_.reset(new ParallaxBackdrop("forest.png", 128, 240, 4));
   map_.load("test.lvl");
+  player_.set_pos(map_.startx(), map_.starty());
 }
 
 bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {

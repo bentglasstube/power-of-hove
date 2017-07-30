@@ -19,9 +19,9 @@ class Player {
 
     double xpos() const;
     double ypos() const;
-
     bool on_ground() const;
 
+    void set_pos(double x, double y);
     void move_left();
     void move_right();
     void stop_moving();
@@ -54,7 +54,7 @@ class Player {
     bool grounded_;
 
 #ifndef NDEBUG
-    SDL_Rect col_;
+    SDL_Rect xcol_, ycol_;
 #endif
 
     void updatex(Audio& audio, const Map& map, unsigned int elapsed);

@@ -49,8 +49,10 @@ void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
       };
   graphics.draw_rect(&vr, 0x0000ffff, false);
 
-  const SDL_Rect cr { col_.x - xoffset, col_.y - yoffset, col_.w, col_.h };
-  graphics.draw_rect(&cr, 0xff0000ff, false);
+  const SDL_Rect crx { xcol_.x - xoffset, xcol_.y - yoffset, xcol_.w, xcol_.h };
+  graphics.draw_rect(&crx, 0xff0000ff, false);
+  const SDL_Rect cry { ycol_.x - xoffset, ycol_.y - yoffset, ycol_.w, ycol_.h };
+  graphics.draw_rect(&cry, 0x800000ff, false);
 #endif
 }
 
@@ -72,6 +74,11 @@ double Player::ypos() const {
 
 bool Player::on_ground() const {
   return grounded_;
+}
+
+void Player::set_pos(double x, double y) {
+  x_ = x;
+  y_ = y;
 }
 
 void Player::move_left() {
@@ -105,7 +112,7 @@ void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
   Map::Tile tile = map.collision(boxh(), vx_ * elapsed, 0);
   if (tile.obstruction) {
 #ifndef NDEBUG
-    col_ = {
+    xcol_ = {
       (int) tile.left,
       (int) tile.top,
       (int) (tile.right - tile.left),
@@ -113,8 +120,7 @@ void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
     };
 #endif
     if (std::abs(vx_) > 0.1) audio.play_sample("bump.wav");
-    if (vx_ > 0) x_ = tile.left - kHalfWidth;
-    else x_ = tile.right + kHalfWidth;
+    x_ = vx_ > 0 ? tile.left - kHalfWidth : tile.right + kHalfWidth;
     vx_ = -vx_;
   } else {
     x_ += vx_ * elapsed;
@@ -128,7 +134,7 @@ void Player::updatey(Audio& audio, const Map& map, unsigned int elapsed) {
   Map::Tile tile = map.collision(boxv(), 0, vy_ * elapsed);
   if (tile.obstruction) {
 #ifndef NDEBUG
-    col_ = {
+    ycol_ = {
       (int) tile.left,
       (int) tile.top,
       (int) (tile.right - tile.left),

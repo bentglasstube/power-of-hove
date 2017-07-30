@@ -1,13 +1,15 @@
 #include "parallax_backdrop.h"
 
-ParallaxBackdrop::ParallaxBackdrop(const std::string& file, double scale) : file_(file), scale_(scale) {}
+ParallaxBackdrop::ParallaxBackdrop(const std::string& file, int width, int height, double scale) :
+  file_(file), width_(width), height_(height), scale_(scale) {}
 
 void ParallaxBackdrop::draw(Graphics& graphics, double xoffset, double yoffset) {
-  const SDL_Rect src = {
-    (int) (xoffset / scale_),
-    (int) (yoffset / scale_),
-    graphics.width(),
-    graphics.height()
-  };
-  graphics.blit(file_, &src, NULL);
+  const SDL_Rect src = { 0, 0, width_, height_ };
+  SDL_Rect dest = { 0, 0, width_, height_ };
+
+  dest.x = -xoffset / scale_;
+  while (dest.x < graphics.width()) {
+    graphics.blit(file_, &src, &dest);
+    dest.x += width_;
+  }
 }

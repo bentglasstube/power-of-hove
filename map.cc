@@ -5,8 +5,9 @@
 
 Map::Map() : tileset_("tiles.png", 8, 16, 16) {}
 
+#define COORD(n) (kTileSize * n + kTileSize / 2)
 #define SET_TILE(t) tiles_[height_][x] = TileType::t
-#define ADD_ITEM(i) items_.emplace_back(Item::ItemType::i, kTileSize * x + kTileSize / 2, kTileSize * height_ + kTileSize / 2)
+#define ADD_ITEM(i) items_.emplace_back(Item::ItemType::i, COORD(x), COORD(height_))
 
 void Map::load(const std::string& file) {
   std::ifstream reader("content/" + file);
@@ -18,17 +19,15 @@ void Map::load(const std::string& file) {
     if (width_ == 0) width_ = l;
     for (size_t x = 0; x < l; ++x) {
       switch (line[x]) {
-        case ' ':
-          SET_TILE(Empty);
+        case 'x':
+          SET_TILE(Block);
           break;
 
         case '+':
-          SET_TILE(Empty);
           ADD_ITEM(Battery);
           break;
 
         case '*':
-          SET_TILE(Empty);
           ADD_ITEM(Plutonium);
           break;
 
@@ -48,8 +47,9 @@ void Map::load(const std::string& file) {
           SET_TILE(SpikeRight);
           break;
 
-        default:
-          SET_TILE(Block);
+        case 'S':
+          sx_ = COORD(x);
+          sy_ = COORD(height_);
           break;
       }
     }
@@ -109,21 +109,6 @@ Map::Tile Map::tile(double x, double y) const {
   return itile((int)(x / kTileSize), (int)(y / kTileSize));
 }
 
-Map::Tile Map::itile(int x, int y) const {
-  const bool oob = x < 0 || x >= width_ || y < 0 || y >= height_;
-  TileType t = oob ? TileType::Block : tiles_[y][x];
-
-  Tile tile;
-  tile.type = t;
-  tile.obstruction = t >= TileType::Block && t <= TileType::SpikeRight;
-  tile.top = y * kTileSize;
-  tile.left = x * kTileSize;
-  tile.right = tile.left + kTileSize;
-  tile.bottom = tile.top + kTileSize;
-
-  return tile;
-}
-
 Map::Tile Map::collision(Rect r, double dx, double dy) const {
   if (dx != 0) {
     const int x = (int) ((dx < 0 ? r.left : r.right) + dx) / kTileSize;
@@ -144,6 +129,34 @@ int Map::pixel_width() const {
 
 int Map::pixel_height() const {
   return height_ * kTileSize;
+}
+
+double Map::startx() const {
+  return sx_;
+}
+
+double Map::starty() const {
+  return sy_;
+}
+
+Map::Tile Map::itile(int x, int y) const {
+  Tile tile;
+
+  if (x < 0 || x >= width_ || y >= height_) {
+    tile.type = TileType::Block;
+  } else if (y < 0) {
+    tile.type = TileType::Empty;
+  } else {
+    tile.type = tiles_[y][x];
+  }
+
+  tile.obstruction = tile.type >= TileType::Block && tile.type <= TileType::SpikeRight;
+  tile.top = y * kTileSize;
+  tile.left = x * kTileSize;
+  tile.right = tile.left + kTileSize;
+  tile.bottom = tile.top + kTileSize;
+
+  return tile;
 }
 
 Map::Tile Map::check_tiles(int x1, int x2, int y1, int y2) const {

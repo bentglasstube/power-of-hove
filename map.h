@@ -32,6 +32,9 @@ class Map {
     int pixel_width() const;
     int pixel_height() const;
 
+    double startx() const;
+    double starty() const;
+
   private:
 
     static constexpr int kTileSize = 16;
@@ -41,6 +44,7 @@ class Map {
     int width_, height_;
     TileType tiles_[128][1024];
     std::vector<Item> items_;
+    double sx_, sy_;
 
     Tile itile(int x, int y) const;
     Tile check_tiles(int x1, int x2, int y1, int y2) const;
