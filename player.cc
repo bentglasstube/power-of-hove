@@ -23,16 +23,15 @@ void Player::update(const Map& map, unsigned int elapsed) {
   } else {
     vx_ *= kDampen * kDampen;
   }
-
-  frames_ += elapsed;
 }
 
 void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
-  const int yo = power_ > 0 ? 3 * std::sin(frames_ / 150.0) : 5;
+  const int f = SDL_GetTicks();
+  const int yo = power_ > 0 ? 3 * std::sin(f / 150.0) : 4;
 
   const int x = x_ - kHalfWidth - xoffset;
   const int y = y_ - kHeight - yoffset + yo;
-  board_.draw(graphics, x, y);
+  board_.draw_ex(graphics, x, y, facing_ == Facing::LEFT, 0, 0, 0);
 
 #ifndef NDEBUG
   const Rect h = boxh();
@@ -79,10 +78,12 @@ bool Player::on_ground() const {
 }
 
 void Player::move_left() {
+  facing_ = Facing::LEFT;
   ax_ = -kAccel;
 }
 
 void Player::move_right() {
+  facing_ = Facing::RIGHT;
   ax_ = kAccel;
 }
 
@@ -116,12 +117,14 @@ void Player::updatey(const Map& map, unsigned int elapsed) {
 
   Map::Tile tile = map.collision(boxv(), 0, vy_ * elapsed);
   if (tile.obstruction) {
+#ifndef NDEBUG
     col_ = {
       (int) tile.left,
       (int) tile.top,
       (int) (tile.right - tile.left),
       (int) (tile.bottom - tile.top)
     };
+#endif
     if (vy_ > 0) {
       y_ = tile.top;
     } else {

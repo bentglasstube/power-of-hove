@@ -42,12 +42,18 @@ class Player {
     static constexpr int kHeight = 16;
     static constexpr int kCellSize = 25;
 
+    enum class Facing { RIGHT, LEFT };
+
     Sprite board_;
     SpriteMap cells_;
 
     double max_power_, power_;
     double x_, y_, vx_, vy_, ax_;
+    Facing facing_;
+
+#ifndef NDEBUG
     SDL_Rect col_;
+#endif
 
     void updatex(const Map& map, unsigned int elapsed);
     void updatey(const Map& map, unsigned int elapsed);
