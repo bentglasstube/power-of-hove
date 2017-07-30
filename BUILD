@@ -26,7 +26,7 @@ cc_binary(
     srcs = ["main.cc"],
     deps = [
         "@libgam//:game",
-        ":title_screen",
+        ":screens",
     ],
 )
 
@@ -48,22 +48,19 @@ pkg_tar(
 )
 
 cc_library(
-    name = "title_screen",
-    srcs = ["title_screen.cc"],
-    hdrs = ["title_screen.h"],
+    name = "screens",
+    srcs = [
+        "level_screen.cc",
+        "overworld_screen.cc",
+        "title_screen.cc",
+    ],
+    hdrs = [
+        "level_screen.h",
+        "overworld_screen.h",
+        "title_screen.h",
+    ],
     deps = [
         "@libgam//:backdrop",
-        "@libgam//:screen",
-        "@libgam//:text",
-        ":level_screen",
-    ],
-)
-
-cc_library(
-    name = "level_screen",
-    srcs = ["level_screen.cc"],
-    hdrs = ["level_screen.h"],
-    deps = [
         "@libgam//:screen",
         "@libgam//:text",
         ":camera",

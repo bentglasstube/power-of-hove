@@ -3,33 +3,35 @@
 #include <memory>
 
 #include "audio.h"
+#include "backdrop.h"
 #include "graphics.h"
 #include "screen.h"
 #include "text.h"
 
-#include "camera.h"
-#include "map.h"
-#include "parallax_backdrop.h"
-#include "player.h"
-
-class LevelScreen : public Screen {
+class OverworldScreen : public Screen {
   public:
 
     void init() override;
     bool update(const Input& input, Audio& audio, unsigned int elapsed) override;
     void draw(Graphics& graphics) const override;
 
-    void load_level(const std::string& level);
-
     Screen* next_screen() override;
     std::string get_music_track() const override;
 
   private:
 
-    std::unique_ptr<Text> text_;
-    std::unique_ptr<ParallaxBackdrop> backdrop_;
+    struct Level {
+      int x, y;
+      std::string file, description;
+    };
 
-    Camera camera_;
-    Map map_;
-    Player player_;
+    static const Level levels_[];
+    static constexpr size_t kLevelCount = 5;
+    static constexpr int kBoxSize = 8;
+
+    std::unique_ptr<Text> text_;
+    std::unique_ptr<Backdrop> backdrop_;
+
+    size_t cursor_ = 3;
 };
+

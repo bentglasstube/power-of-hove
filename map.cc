@@ -51,6 +51,14 @@ void Map::load(const std::string& file) {
           sx_ = COORD(x);
           sy_ = COORD(height_);
           break;
+
+        case 'd':
+          SET_TILE(Dirt);
+          break;
+
+        case 'g':
+          SET_TILE(Grass);
+          break;
       }
     }
     ++height_;
@@ -150,7 +158,7 @@ Map::Tile Map::itile(int x, int y) const {
     tile.type = tiles_[y][x];
   }
 
-  tile.obstruction = tile.type >= TileType::Block && tile.type <= TileType::SpikeRight;
+  tile.obstruction = tile.type >= TileType::Block && tile.type <= TileType::Grass;
   tile.top = y * kTileSize;
   tile.left = x * kTileSize;
   tile.right = tile.left + kTileSize;

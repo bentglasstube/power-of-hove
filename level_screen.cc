@@ -5,8 +5,6 @@
 void LevelScreen::init() {
   text_.reset(new Text("text.png"));
   backdrop_.reset(new ParallaxBackdrop("forest.png", 128, 240, 4));
-  map_.load("test.lvl");
-  player_.set_pos(map_.startx(), map_.starty());
 }
 
 bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
@@ -54,6 +52,11 @@ void LevelScreen::draw(Graphics& graphics) const {
   player_.draw(graphics, cx, cy);
 
   player_.draw_power(graphics, 0, 0);
+}
+
+void LevelScreen::load_level(const std::string& level) {
+  map_.load(level);
+  player_.set_pos(map_.startx(), map_.starty());
 }
 
 Screen* LevelScreen::next_screen() {

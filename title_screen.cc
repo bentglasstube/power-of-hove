@@ -1,6 +1,6 @@
 #include "title_screen.h"
 
-#include "level_screen.h"
+#include "overworld_screen.h"
 
 #include <cmath>
 
@@ -21,7 +21,7 @@ void TitleScreen::draw(Graphics& graphics) const {
 }
 
 Screen* TitleScreen::next_screen() {
-  return new LevelScreen();
+  return new OverworldScreen();
 }
 
 std::string TitleScreen::get_music_track() const {
