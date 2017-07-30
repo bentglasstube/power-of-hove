@@ -5,13 +5,14 @@
 #include "graphics.h"
 #include "spritemap.h"
 
+#include "game_state.h"
 #include "map.h"
 #include "rect.h"
 
 class Player {
   public:
 
-    Player();
+    Player(GameState state);
 
     void update(Audio& audio, const Map& map, unsigned int elapsed);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
@@ -47,7 +48,6 @@ class Player {
 
     SpriteMap barty_;
     SpriteMap cells_;
-
     double max_power_, power_;
     double x_, y_, vx_, vy_, ax_;
     Facing facing_;

@@ -1,35 +1,34 @@
 #pragma once
 
 #include "audio.h"
+#include "backdrop.h"
 #include "graphics.h"
 #include "screen.h"
 #include "text.h"
 
-#include "camera.h"
 #include "game_state.h"
-#include "map.h"
-#include "parallax_backdrop.h"
-#include "player.h"
 
-class LevelScreen : public Screen {
+class ShopScreen : public Screen {
   public:
 
-    LevelScreen(GameState state);
+    ShopScreen(GameState state);
 
     bool update(const Input& input, Audio& audio, unsigned int elapsed) override;
     void draw(Graphics& graphics) const override;
-
-    void load_level(const std::string& level);
 
     Screen* next_screen() override;
     std::string get_music_track() const override;
 
   private:
 
+    static constexpr int kTextRate = 50;
+
     Text text_;
-    ParallaxBackdrop backdrop_;
+    Backdrop backdrop_;
     GameState state_;
-    Player player_;
-    Camera camera_;
-    Map map_;
+    size_t counter_, index_;
+
+    std::string dialog() const;
+    bool done() const;
 };
+

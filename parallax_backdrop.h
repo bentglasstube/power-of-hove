@@ -8,7 +8,7 @@ class ParallaxBackdrop {
   public:
     ParallaxBackdrop(const std::string& file, int width, int height, double scale);
 
-    void draw(Graphics& graphics, double xoffset, double yoffset);
+    void draw(Graphics& graphics, double xoffset, double yoffset) const;
 
   private:
 

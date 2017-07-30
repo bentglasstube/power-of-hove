@@ -1,11 +1,9 @@
 #include "level_screen.h"
 
-#include <iostream>
+#include "overworld_screen.h"
 
-void LevelScreen::init() {
-  text_.reset(new Text("text.png"));
-  backdrop_.reset(new ParallaxBackdrop("forest.png", 128, 240, 4));
-}
+LevelScreen::LevelScreen(GameState state) :
+  text_("text.png"), backdrop_("forest.png", 128, 240, 4), state_(state), player_(state) {}
 
 bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (input.key_held(SDL_SCANCODE_A)) {
@@ -40,14 +38,14 @@ bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed)
     map_.remove_item(i);
   }
 
-  return true;
+  return !map_.out_of_bounds(player_.xpos(), player_.ypos());
 }
 
 void LevelScreen::draw(Graphics& graphics) const {
   const double cx = camera_.xoffset();
   const double cy = camera_.yoffset();
 
-  backdrop_->draw(graphics, cx, cy);
+  backdrop_.draw(graphics, cx, cy);
   map_.draw(graphics, cx, cy);
   player_.draw(graphics, cx, cy);
 
@@ -60,7 +58,7 @@ void LevelScreen::load_level(const std::string& level) {
 }
 
 Screen* LevelScreen::next_screen() {
-  return nullptr;
+  return std::move(new OverworldScreen(state_));
 }
 
 std::string LevelScreen::get_music_track() const {

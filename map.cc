@@ -12,6 +12,9 @@ Map::Map() : tileset_("tiles.png", 8, 16, 16) {}
 void Map::load(const std::string& file) {
   std::ifstream reader("content/" + file);
 
+  // fuck you alan
+  width_ = height_ = 0;
+
   std::string line;
   while (reader) {
     std::getline(reader, line);
@@ -147,12 +150,15 @@ double Map::starty() const {
   return sy_;
 }
 
+bool Map::out_of_bounds(double x, double y) const {
+  const int px = x / kTileSize;
+  return px < 0 || px > width_ || y / kTileSize > height_;
+}
+
 Map::Tile Map::itile(int x, int y) const {
   Tile tile;
 
-  if (x < 0 || x >= width_ || y >= height_) {
-    tile.type = TileType::Block;
-  } else if (y < 0) {
+  if (x < 0 || x >= width_ || y < 0 || y >= height_) {
     tile.type = TileType::Empty;
   } else {
     tile.type = tiles_[y][x];

@@ -1,11 +1,10 @@
 #include "overworld_screen.h"
 
 #include "level_screen.h"
+#include "shop_screen.h"
 
-void OverworldScreen::init() {
-  backdrop_.reset(new Backdrop("map.png"));
-  text_.reset(new Text("text.png"));
-}
+OverworldScreen::OverworldScreen(GameState state) :
+  text_("text.png"), backdrop_("map.png"), state_(state) {}
 
 bool OverworldScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (input.key_pressed(SDL_SCANCODE_SPACE)) {
@@ -24,11 +23,11 @@ bool OverworldScreen::update(const Input& input, Audio& audio, unsigned int elap
 }
 
 void OverworldScreen::draw(Graphics& graphics) const {
-  backdrop_->draw(graphics);
+  backdrop_.draw(graphics);
 
   const auto& l = levels_[cursor_];
 
-  text_->draw(graphics, l.description, graphics.width() / 2, 224, Text::Alignment::CENTER);
+  text_.draw(graphics, l.description, graphics.width() / 2, 224, Text::Alignment::CENTER);
 
   if (SDL_GetTicks() / 250 % 2 == 0) {
     const SDL_Rect r = { l.x, l.y, kBoxSize, kBoxSize };
@@ -40,10 +39,9 @@ Screen* OverworldScreen::next_screen() {
   const auto& l = levels_[cursor_];
 
   if (l.file.empty()) {
-    // TODO load shop
-    return nullptr;
+    return std::move(new ShopScreen(state_));
   } else {
-    LevelScreen* s = new LevelScreen();
+    LevelScreen* s = std::move(new LevelScreen(state_));
     s->load_level(l.file);
     return s;
   }

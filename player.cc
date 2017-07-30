@@ -4,10 +4,15 @@
 #include <cmath>
 #include <iostream>
 
-Player::Player() :
+Player::Player(GameState state) :
   barty_("barty.png", 8, kWidth, kHeight),
   cells_("power.png", 7, 8, 8),
-  max_power_(100), power_(max_power_), x_(64), y_(64)
+  max_power_(state.power_cells * 25), power_(max_power_),
+  x_(0), y_(0), vx_(0), vy_(0), ax_(0),
+  facing_(Facing::Right), grounded_(false)
+#ifndef NDEBUG
+  , xcol_({0, 0, 0, 0}), ycol_({0, 0, 0, 0})
+#endif
 {}
 
 void Player::update(Audio& audio, const Map& map, unsigned int elapsed) {

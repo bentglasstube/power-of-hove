@@ -1,17 +1,18 @@
 #pragma once
 
-#include <memory>
-
 #include "audio.h"
 #include "backdrop.h"
 #include "graphics.h"
 #include "screen.h"
 #include "text.h"
 
+#include "game_state.h"
+
 class OverworldScreen : public Screen {
   public:
 
-    void init() override;
+    OverworldScreen(GameState state);
+
     bool update(const Input& input, Audio& audio, unsigned int elapsed) override;
     void draw(Graphics& graphics) const override;
 
@@ -26,12 +27,12 @@ class OverworldScreen : public Screen {
     };
 
     static const Level levels_[];
-    static constexpr size_t kLevelCount = 5;
+    static constexpr int kLevelCount = 5;
     static constexpr int kBoxSize = 8;
 
-    std::unique_ptr<Text> text_;
-    std::unique_ptr<Backdrop> backdrop_;
-
-    size_t cursor_ = 3;
+    Text text_;
+    Backdrop backdrop_;
+    GameState state_;
+    int cursor_ = 3;
 };
 

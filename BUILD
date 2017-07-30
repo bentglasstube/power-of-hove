@@ -52,11 +52,13 @@ cc_library(
     srcs = [
         "level_screen.cc",
         "overworld_screen.cc",
+        "shop_screen.cc",
         "title_screen.cc",
     ],
     hdrs = [
         "level_screen.h",
         "overworld_screen.h",
+        "shop_screen.h",
         "title_screen.h",
     ],
     deps = [
@@ -64,6 +66,7 @@ cc_library(
         "@libgam//:screen",
         "@libgam//:text",
         ":camera",
+        ":game_state",
         ":map",
         ":parallax_backdrop",
         ":player",
@@ -80,6 +83,7 @@ cc_library(
         "@libgam//:input",
         "@libgam//:sprite",
         "@libgam//:spritemap",
+        ":game_state",
         ":map",
         ":rect",
     ],
@@ -132,3 +136,8 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "game_state",
+    srcs = ["game_state.cc"],
+    hdrs = ["game_state.h"],
+)
