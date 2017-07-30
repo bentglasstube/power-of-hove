@@ -90,7 +90,7 @@ void Map::draw(Graphics& graphics, int xoffset, int yoffset) const {
 const Item* Map::item(double x, double y) const {
   for (const auto& item : items_) {
     const double dx = item.xpos() - x;
-    const double dy = item.ypos() - y;
+    const double dy = item.ypos() - y + kTileSize / 2;
     const double d2 = dx * dx + dy * dy;
     if (d2 < kTileSize * kTileSize) return &item;
   }
