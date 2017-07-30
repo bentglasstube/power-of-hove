@@ -51,6 +51,7 @@ class Player {
     double max_power_, power_;
     double x_, y_, vx_, vy_, ax_;
     Facing facing_;
+    bool grounded_;
 
 #ifndef NDEBUG
     SDL_Rect col_;

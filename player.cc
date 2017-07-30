@@ -71,7 +71,7 @@ double Player::ypos() const {
 }
 
 bool Player::on_ground() const {
-  return vy_ == 0;
+  return grounded_;
 }
 
 void Player::move_left() {
@@ -115,6 +115,7 @@ void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
 
 void Player::updatey(Audio& audio, const Map& map, unsigned int elapsed) {
   vy_ += kGravity * elapsed;
+  grounded_ = false;
 
   Map::Tile tile = map.collision(boxv(), 0, vy_ * elapsed);
   if (tile.obstruction) {
@@ -128,6 +129,7 @@ void Player::updatey(Audio& audio, const Map& map, unsigned int elapsed) {
 #endif
     if (vy_ > 0) {
       y_ = tile.top;
+      grounded_ = true;
     } else {
       y_ = tile.bottom + kHeight;
     }
