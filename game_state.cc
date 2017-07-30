@@ -14,3 +14,10 @@ void GameState::spend(int amount) {
   plutonium -= amount;
 }
 
+// is this performant?  who fucking knows
+size_t GameState::Hash::operator()(std::pair<double, double> const& p) const {
+  size_t hash = 42;
+  hash *= 15 + (int) p.first;
+  hash *= 15 + (int) p.second;
+  return hash;
+}

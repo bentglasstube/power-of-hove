@@ -12,11 +12,11 @@ bool OverworldScreen::update(const Input& input, Audio& audio, unsigned int elap
   }
 
   if (input.key_pressed(SDL_SCANCODE_A) || input.key_pressed(SDL_SCANCODE_W)) {
-    if (--cursor_ < 0) cursor_ = kLevelCount - 1;
+    if (--state_.level < 0) state_.level = kLevelCount - 1;
   }
 
   if (input.key_pressed(SDL_SCANCODE_D) || input.key_pressed(SDL_SCANCODE_S)) {
-    if (++cursor_ >= kLevelCount) cursor_ = 0;
+    if (++state_.level >= kLevelCount) state_.level = 0;
   }
 
   return true;
@@ -25,7 +25,7 @@ bool OverworldScreen::update(const Input& input, Audio& audio, unsigned int elap
 void OverworldScreen::draw(Graphics& graphics) const {
   backdrop_.draw(graphics);
 
-  const auto& l = levels_[cursor_];
+  const auto& l = levels_[state_.level];
 
   text_.draw(graphics, l.description, graphics.width() / 2, 224, Text::Alignment::CENTER);
 
@@ -36,7 +36,7 @@ void OverworldScreen::draw(Graphics& graphics) const {
 }
 
 Screen* OverworldScreen::next_screen() {
-  const auto& l = levels_[cursor_];
+  const auto& l = levels_[state_.level];
 
   if (l.file.empty()) {
     return std::move(new ShopScreen(state_));

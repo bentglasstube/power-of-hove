@@ -33,6 +33,5 @@ class OverworldScreen : public Screen {
     Text text_;
     Backdrop backdrop_;
     GameState state_;
-    int cursor_ = 3;
 };
 
