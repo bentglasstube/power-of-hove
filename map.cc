@@ -47,6 +47,8 @@ void Map::load(const std::string& file) {
         case 'd': SET_TILE(Dirt);       break;
         case 'g': SET_TILE(Grass);      break;
 
+        case 'I': SET_TILE(BeamStart);  break;
+        case 'i': SET_TILE(BeamRest);   break;
         case '^': SET_TILE(DoorTop);    break;
         case 'v': SET_TILE(DoorBottom); break;
         case 'c': SET_TILE(Chair);      break;
@@ -155,7 +157,7 @@ Map::Tile Map::itile(int x, int y) const {
     tile.type = tiles_[y][x];
   }
 
-  tile.obstruction = tile.type >= TileType::Block && tile.type <= TileType::Grass;
+  tile.obstruction = tile.type >= TileType::Block && tile.type <= TileType::BeamRest;
   tile.top = y * kTileSize;
   tile.left = x * kTileSize;
   tile.right = tile.left + kTileSize;

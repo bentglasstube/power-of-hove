@@ -3,7 +3,6 @@
 #include "overworld_screen.h"
 
 LevelScreen::LevelScreen(GameState state) :
-  backdrop_("forest.png", 128, 240, 4),
   digits_("digits.png", 10, 8, 8),
   plutonium_("objects.png", 8, 8, 8),
   state_(state), player_(state), map_(state), camera_() {}
@@ -48,7 +47,10 @@ void LevelScreen::draw(Graphics& graphics) const {
   const double cx = camera_.xoffset();
   const double cy = camera_.yoffset();
 
-  backdrop_.draw(graphics, cx, cy);
+  if (backdrop_) {
+    backdrop_->draw(graphics, cx, cy);
+  }
+
   map_.draw(graphics, cx, cy);
   player_.draw(graphics, cx, cy);
 
@@ -60,6 +62,16 @@ void LevelScreen::draw(Graphics& graphics) const {
 void LevelScreen::load_level(const std::string& level) {
   map_.load(level);
   player_.set_pos(map_.startx(), map_.starty());
+
+  if (level == "forest.lvl") {
+    backdrop_.reset(new ParallaxBackdrop("forest.png", 128, 240, 4));
+  } else if (level == "neighborhood.lvl") {
+    backdrop_.reset(new ParallaxBackdrop("neighborhood.png", 576, 240, 4));
+  } else if (level == "school.lvl") {
+    backdrop_.reset(new ParallaxBackdrop("school.png", 64, 240, 1));
+  } else {
+    backdrop_.reset();
+  }
 }
 
 Screen* LevelScreen::next_screen() {

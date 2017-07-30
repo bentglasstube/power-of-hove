@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "audio.h"
 #include "graphics.h"
 #include "screen.h"
@@ -26,7 +28,8 @@ class LevelScreen : public Screen {
 
   private:
 
-    ParallaxBackdrop backdrop_;
+    std::unique_ptr<ParallaxBackdrop> backdrop_;
+
     SpriteMap digits_, plutonium_;
     GameState state_;
     Player player_;

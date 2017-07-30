@@ -14,7 +14,7 @@ class Map {
 
     enum class TileType {
       Empty, Block, Window, LogLeft, LogMid, LogRight, Dirt, Grass,
-      DoorTop, DoorBottom, Chair, Flower, Register, Fence
+      BeamStart, BeamRest, DoorTop, DoorBottom, Chair, Flower, Register, Fence
     };
 
     struct Tile {
