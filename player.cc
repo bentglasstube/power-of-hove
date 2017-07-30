@@ -104,6 +104,14 @@ void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
 
   Map::Tile tile = map.collision(boxh(), vx_ * elapsed, 0);
   if (tile.obstruction) {
+#ifndef NDEBUG
+    col_ = {
+      (int) tile.left,
+      (int) tile.top,
+      (int) (tile.right - tile.left),
+      (int) (tile.bottom - tile.top)
+    };
+#endif
     if (std::abs(vx_) > 0.1) audio.play_sample("bump.wav");
     if (vx_ > 0) x_ = tile.left - kHalfWidth;
     else x_ = tile.right + kHalfWidth;
