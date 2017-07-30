@@ -53,7 +53,7 @@ std::string OverworldScreen::get_music_track() const {
 
 const OverworldScreen::Level OverworldScreen::levels_[] = {
   {  68,  36, "school.lvl",       "Mill Valley High" },
-  { 148,  20, "forest.lvl",       "Clever Name Forest" },
+  { 148,  20, "forest.lvl",       "Peabody Forest" },
   { 164, 100, "mall.lvl",         "Twin Fir Mall" },
   {  36, 148, "",                 "Toc's Garage Lab" },
   { 116, 164, "neighborhood.lvl", "Tiger Manors" },

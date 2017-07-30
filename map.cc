@@ -23,11 +23,9 @@ void Map::load(const std::string& file) {
     const size_t l = line.length();
     if (width_ == 0) width_ = l;
     for (size_t x = 0; x < l; ++x) {
-      switch (line[x]) {
-        case 'x':
-          SET_TILE(Block);
-          break;
+      SET_TILE(Empty);
 
+      switch (line[x]) {
         case '+':
           ADD_ITEM(Battery);
           break;
@@ -36,34 +34,25 @@ void Map::load(const std::string& file) {
           if (!state_.grabbed(COORD(x), COORD(height_))) ADD_ITEM(Plutonium);
           break;
 
-        case '^':
-          SET_TILE(SpikeBottom);
-          break;
-
-        case 'v':
-          SET_TILE(SpikeTop);
-          break;
-
-        case '>':
-          SET_TILE(SpikeLeft);
-          break;
-
-        case '<':
-          SET_TILE(SpikeRight);
-          break;
-
         case 'S':
           sx_ = COORD(x);
           sy_ = COORD(height_);
           break;
 
-        case 'd':
-          SET_TILE(Dirt);
-          break;
+        case 'x': SET_TILE(Block);      break;
+        case 'o': SET_TILE(Window);     break;
+        case '[': SET_TILE(LogLeft);    break;
+        case '=': SET_TILE(LogMid);     break;
+        case ']': SET_TILE(LogRight);   break;
+        case 'd': SET_TILE(Dirt);       break;
+        case 'g': SET_TILE(Grass);      break;
 
-        case 'g':
-          SET_TILE(Grass);
-          break;
+        case '^': SET_TILE(DoorTop);    break;
+        case 'v': SET_TILE(DoorBottom); break;
+        case 'c': SET_TILE(Chair);      break;
+        case 'f': SET_TILE(Flower);     break;
+        case 'r': SET_TILE(Register);   break;
+        case 'p': SET_TILE(Fence);      break;
       }
     }
     ++height_;

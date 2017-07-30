@@ -13,7 +13,8 @@ class Map {
   public:
 
     enum class TileType {
-      Empty, Block, SpikeBottom, SpikeTop, SpikeLeft, SpikeRight, Dirt, Grass,
+      Empty, Block, Window, LogLeft, LogMid, LogRight, Dirt, Grass,
+      DoorTop, DoorBottom, Chair, Flower, Register, Fence
     };
 
     struct Tile {
