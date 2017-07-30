@@ -3,7 +3,7 @@
 #include "audio.h"
 #include "graphics.h"
 #include "screen.h"
-#include "text.h"
+#include "spritemap.h"
 
 #include "camera.h"
 #include "game_state.h"
@@ -26,10 +26,10 @@ class LevelScreen : public Screen {
 
   private:
 
-    Text text_;
     ParallaxBackdrop backdrop_;
+    SpriteMap digits_, plutonium_;
     GameState state_;
     Player player_;
-    Camera camera_;
     Map map_;
+    Camera camera_;
 };

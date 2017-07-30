@@ -5,6 +5,7 @@
 #include "graphics.h"
 #include "spritemap.h"
 
+#include "game_state.h"
 #include "item.h"
 #include "rect.h"
 
@@ -21,7 +22,7 @@ class Map {
       double top, left, right, bottom;
     };
 
-    Map();
+    Map(GameState state);
 
     void load(const std::string& file);
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
@@ -43,11 +44,12 @@ class Map {
     static constexpr int kTileSize = 16;
     static constexpr Tile kNullTile {};
 
+    GameState state_;
     SpriteMap tileset_;
     int width_, height_;
+    double sx_, sy_;
     TileType tiles_[128][1024];
     std::vector<Item> items_;
-    double sx_, sy_;
 
     Tile itile(int x, int y) const;
     Tile check_tiles(int x1, int x2, int y1, int y2) const;

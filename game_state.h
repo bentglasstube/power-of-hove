@@ -4,11 +4,12 @@
 
 class GameState {
   public:
-    int power_cells = 4;
+    int power_cells = 4, plutonium = 0;
     bool double_jump = false, slow_fall = false;
 
     bool grabbed(double x, double y) const;
     void grab(double x, double y);
+    void spend(int number);
 
   private:
     struct Hash {

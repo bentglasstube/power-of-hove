@@ -3,7 +3,9 @@
 #include <iostream>
 #include <fstream>
 
-Map::Map() : tileset_("tiles.png", 8, 16, 16) {}
+Map::Map(GameState state) :
+  state_(state), tileset_("tiles.png", 8, 16, 16),
+  width_(0), height_(0), sx_(0), sy_(0) {}
 
 #define COORD(n) (kTileSize * n + kTileSize / 2)
 #define SET_TILE(t) tiles_[height_][x] = TileType::t
@@ -31,7 +33,7 @@ void Map::load(const std::string& file) {
           break;
 
         case '*':
-          ADD_ITEM(Plutonium);
+          if (!state_.grabbed(COORD(x), COORD(height_))) ADD_ITEM(Plutonium);
           break;
 
         case '^':

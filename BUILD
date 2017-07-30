@@ -96,6 +96,7 @@ cc_library(
     deps = [
         "@libgam//:graphics",
         "@libgam//:spritemap",
+        ":game_state",
         ":item",
         ":rect",
     ],

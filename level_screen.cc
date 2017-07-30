@@ -3,7 +3,10 @@
 #include "overworld_screen.h"
 
 LevelScreen::LevelScreen(GameState state) :
-  text_("text.png"), backdrop_("forest.png", 128, 240, 4), state_(state), player_(state) {}
+  backdrop_("forest.png", 128, 240, 4),
+  digits_("digits.png", 10, 8, 8),
+  plutonium_("objects.png", 8, 8, 8),
+  state_(state), player_(state), map_(state), camera_() {}
 
 bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (input.key_held(SDL_SCANCODE_A)) {
@@ -30,8 +33,8 @@ bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed)
         break;
 
       case Item::ItemType::Plutonium:
-        // TODO add a plutonium
         audio.play_sample("plutonium.wav");
+        state_.grab(i->xpos(), i->ypos());
         break;
     }
 
@@ -50,6 +53,8 @@ void LevelScreen::draw(Graphics& graphics) const {
   player_.draw(graphics, cx, cy);
 
   player_.draw_power(graphics, 0, 0);
+  plutonium_.draw(graphics, 8 + SDL_GetTicks() / 100 % 8, graphics.width() - 16, 0);
+  digits_.draw(graphics, state_.plutonium, graphics.width() - 8, 0);
 }
 
 void LevelScreen::load_level(const std::string& level) {

@@ -21,6 +21,7 @@ class ShopScreen : public Screen {
 
   private:
 
+    static const std::string dialogs_[];
     static constexpr int kTextRate = 50;
 
     Text text_;

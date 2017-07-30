@@ -7,5 +7,10 @@ bool GameState::grabbed(double x, double y) const {
 
 void GameState::grab(double x, double y) {
   grabbed_.emplace(std::make_pair(x, y));
+  ++plutonium;
+}
+
+void GameState::spend(int amount) {
+  plutonium -= amount;
 }
 
