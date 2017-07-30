@@ -3,7 +3,6 @@
 #include "audio.h"
 #include "input.h"
 #include "graphics.h"
-#include "sprite.h"
 #include "spritemap.h"
 
 #include "map.h"
@@ -39,14 +38,14 @@ class Player {
     static constexpr double kJumpCost = 2.5;
     static constexpr double kIdleCost = 0.001;
 
-    static constexpr int kWidth = 48;
+    static constexpr int kWidth = 16;
     static constexpr int kHalfWidth = kWidth / 2;
-    static constexpr int kHeight = 16;
+    static constexpr int kHeight = 24;
     static constexpr int kCellSize = 25;
 
     enum class Facing { Right, Left };
 
-    Sprite board_;
+    SpriteMap barty_;
     SpriteMap cells_;
 
     double max_power_, power_;
@@ -63,4 +62,6 @@ class Player {
 
     Rect boxh() const;
     Rect boxv() const;
+
+    int aframe() const;
 };

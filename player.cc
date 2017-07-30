@@ -5,7 +5,7 @@
 #include <iostream>
 
 Player::Player() :
-  board_("board.png", 0, 0, kWidth, kHeight),
+  barty_("barty.png", 8, kWidth, kHeight),
   cells_("power.png", 7, 8, 8),
   max_power_(100), power_(max_power_), x_(64), y_(64)
 {}
@@ -26,12 +26,9 @@ void Player::update(Audio& audio, const Map& map, unsigned int elapsed) {
 }
 
 void Player::draw(Graphics& graphics, int xoffset, int yoffset) const {
-  const int f = SDL_GetTicks();
-  const int yo = power_ > 0 ? 3 * std::sin(f / 150.0) : 4;
-
   const int x = x_ - kHalfWidth - xoffset;
-  const int y = y_ - kHeight - yoffset + yo;
-  board_.draw_ex(graphics, x, y, facing_ == Facing::Left, 0, 0, 0);
+  const int y = y_ - kHeight - yoffset;
+  barty_.draw_ex(graphics, aframe(), x, y, facing_ == Facing::Left, 0, 0, 0);
 
 #ifndef NDEBUG
   const Rect h = boxh();
@@ -157,4 +154,12 @@ Rect Player::boxh() const {
 
 Rect Player::boxv() const {
   return Rect(x_ - kHalfWidth + 2, y_ - kHeight, x_ + kHalfWidth - 2, y_);
+}
+
+int Player::aframe() const {
+  const int f = SDL_GetTicks() / 100;
+  if (power_ <= 0) return 6;
+  if (vy_ >= 0.2) return 4 + f % 2;
+  if (std::abs(vx_) >= 0.15) return f % 4;
+  return 0;
 }
