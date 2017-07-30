@@ -17,8 +17,8 @@ class Player {
     void draw(Graphics& graphics, int xoffset, int yoffset) const;
     void draw_power(Graphics& graphics, int x, int y) const;
 
-    double posx() const;
-    double posy() const;
+    double xpos() const;
+    double ypos() const;
 
     bool on_ground() const;
 

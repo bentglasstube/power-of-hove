@@ -9,8 +9,8 @@ double bound(double min, double value, double max) {
 Camera::Camera() {}
 
 void Camera::update(const Player& player, const Map& map, unsigned int elapsed) {
-  const double px = player.posx();
-  const double py = player.posy();
+  const double px = player.xpos();
+  const double py = player.ypos();
   const double delta = kMaxSpeed * elapsed;
 
   // try to keep the player centered

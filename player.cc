@@ -65,11 +65,11 @@ void Player::draw_power(Graphics& graphics, int x, int y) const {
   }
 }
 
-double Player::posx() const {
+double Player::xpos() const {
   return x_;
 }
 
-double Player::posy() const {
+double Player::ypos() const {
   return y_;
 }
 
