@@ -29,7 +29,7 @@ class ShopScreen : public Screen {
     GameState state_;
     size_t counter_, index_;
 
-    std::string dialog() const;
+    int phase() const;
     bool done() const;
 };
 

@@ -1,5 +1,9 @@
 #include "game_state.h"
 
+int GameState::collected() const {
+  return grabbed_.size();
+}
+
 bool GameState::grabbed(double x, double y) const {
   const auto& i = grabbed_.find(std::make_pair(x, y));
   return i != grabbed_.end();

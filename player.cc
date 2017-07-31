@@ -9,7 +9,8 @@ Player::Player(GameState state) :
   cells_("power.png", 7, 8, 8),
   max_power_(state.power_cells * 25), power_(max_power_),
   x_(0), y_(0), vx_(0), vy_(0), ax_(0),
-  facing_(Facing::Right), grounded_(false)
+  facing_(Facing::Right), grounded_(false),
+  can_dj_(state.double_jump), did_dj_(false)
 #ifndef NDEBUG
   , xcol_({0, 0, 0, 0}), ycol_({0, 0, 0, 0})
 #endif
@@ -101,10 +102,20 @@ void Player::stop_moving() {
 }
 
 void Player::jump(Audio& audio) {
-  if (on_ground() && power_ > kJumpCost) {
-    vy_ -= kJumpSpeed;
-    drain(audio, kJumpCost);
+  if (power_ < kJumpCost) return;
+
+  if (!on_ground()) {
+    if (can_dj_) {
+      if (did_dj_) return;
+      audio.play_sample("doublejump.wav");
+      did_dj_ = true;
+    } else {
+      return;
+    }
   }
+
+  vy_ -= kJumpSpeed;
+  drain(audio, kJumpCost);
 }
 
 void Player::add_power() {
@@ -149,6 +160,7 @@ void Player::updatey(Audio& audio, const Map& map, unsigned int elapsed) {
     if (vy_ > 0) {
       y_ = tile.top;
       grounded_ = true;
+      did_dj_ = false;
     } else {
       y_ = tile.bottom + kHeight;
     }
