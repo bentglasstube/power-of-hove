@@ -19,11 +19,9 @@ bool ShopScreen::update(const Input& input, Audio& audio, unsigned int elapsed) 
     switch (phase()) {
       case 1:
         ++state_.power_cells;
-        audio.play_sample("powerup.wav");
         break;
       case 3:
         state_.double_jump = true;
-        audio.play_sample("powerup.wav");
         break;
       case 5:
         break;

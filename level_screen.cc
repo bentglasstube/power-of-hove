@@ -68,8 +68,6 @@ void LevelScreen::load_level(const std::string& level) {
   } else if (level == "neighborhood.lvl") {
     backdrop_.reset(new ParallaxBackdrop("neighborhood.png", 576, 240, 4));
   } else if (level == "school.lvl") {
-    backdrop_.reset(new ParallaxBackdrop("school.png", 64, 240, 1));
-  } else {
     backdrop_.reset();
   }
 }
