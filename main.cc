@@ -11,7 +11,7 @@ int main(int, char**) {
   config.graphics.fullscreen = true;
 
   Game game(config);
-  game.loop(std::move(new TitleScreen()));
+  game.loop(new TitleScreen());
 
   return 0;
 }

@@ -73,7 +73,7 @@ void LevelScreen::load_level(const std::string& level) {
 }
 
 Screen* LevelScreen::next_screen() {
-  return std::move(new OverworldScreen(state_));
+  return new OverworldScreen(state_);
 }
 
 std::string LevelScreen::get_music_track() const {

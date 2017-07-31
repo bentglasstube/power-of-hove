@@ -19,7 +19,7 @@ void TitleScreen::draw(Graphics& graphics) const {
 
 Screen* TitleScreen::next_screen() {
   GameState state;
-  return std::move(new OverworldScreen(state));
+  return new OverworldScreen(state);
 }
 
 std::string TitleScreen::get_music_track() const {

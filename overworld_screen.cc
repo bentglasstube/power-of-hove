@@ -39,9 +39,9 @@ Screen* OverworldScreen::next_screen() {
   const auto& l = levels_[state_.level];
 
   if (l.file.empty()) {
-    return std::move(new ShopScreen(state_));
+    return new ShopScreen(state_);
   } else {
-    LevelScreen* s = std::move(new LevelScreen(state_));
+    LevelScreen* s = new LevelScreen(state_);
     s->load_level(l.file);
     return s;
   }
