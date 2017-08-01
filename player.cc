@@ -82,6 +82,10 @@ bool Player::on_ground() const {
   return grounded_;
 }
 
+bool Player::dead() const {
+  return power_ <= 0;
+}
+
 void Player::set_pos(double x, double y) {
   x_ = x;
   y_ = y;

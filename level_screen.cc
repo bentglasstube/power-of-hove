@@ -1,11 +1,13 @@
 #include "level_screen.h"
 
 #include "overworld_screen.h"
+#include "title_screen.h"
 
 LevelScreen::LevelScreen(GameState state) :
   digits_("digits.png", 10, 8, 8),
   plutonium_("objects.png", 8, 8, 8),
-  state_(state), player_(state), map_(state), camera_() {}
+  state_(state), player_(state), map_(state), camera_(),
+  timer_(0) {}
 
 bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
   if (input.key_held(SDL_SCANCODE_A)) {
@@ -40,7 +42,18 @@ bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed)
     map_.remove_item(i);
   }
 
-  return !map_.out_of_bounds(player_.xpos(), player_.ypos());
+  if (player_.dead()) {
+    timer_ += elapsed;
+    if (timer_ > kResetTimeout) {
+      return false;
+    }
+  }
+
+  if (map_.out_of_bounds(player_.xpos(), player_.ypos())) {
+    return false;
+  }
+
+  return true;
 }
 
 void LevelScreen::draw(Graphics& graphics) const {
@@ -73,7 +86,8 @@ void LevelScreen::load_level(const std::string& level) {
 }
 
 Screen* LevelScreen::next_screen() {
-  return new OverworldScreen(state_);
+  if (player_.dead()) return new TitleScreen();
+  else return new OverworldScreen(state_);
 }
 
 std::string LevelScreen::get_music_track() const {

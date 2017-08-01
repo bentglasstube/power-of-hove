@@ -28,6 +28,8 @@ class LevelScreen : public Screen {
 
   private:
 
+    static const int kResetTimeout = 2500;
+
     std::unique_ptr<ParallaxBackdrop> backdrop_;
 
     SpriteMap digits_, plutonium_;
@@ -35,4 +37,6 @@ class LevelScreen : public Screen {
     Player player_;
     Map map_;
     Camera camera_;
+
+    int timer_;
 };

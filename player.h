@@ -21,6 +21,7 @@ class Player {
     double xpos() const;
     double ypos() const;
     bool on_ground() const;
+    bool dead() const;
 
     void set_pos(double x, double y);
     void move_left();
