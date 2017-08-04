@@ -38,7 +38,7 @@ void ShopScreen::draw(Graphics& graphics) const {
   text_.draw(graphics, dialogs_[phase()].substr(0, index_), 8, 144);
 }
 
-Screen* ShopScreen::next_screen() {
+Screen* ShopScreen::next_screen() const {
   return new OverworldScreen(state_);
 }
 

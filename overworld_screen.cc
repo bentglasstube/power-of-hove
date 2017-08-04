@@ -27,7 +27,7 @@ void OverworldScreen::draw(Graphics& graphics) const {
 
   const auto& l = levels_[state_.level];
 
-  text_.draw(graphics, l.description, graphics.width() / 2, 224, Text::Alignment::CENTER);
+  text_.draw(graphics, l.description, graphics.width() / 2, 224, Text::Alignment::Center);
 
   if (SDL_GetTicks() / 250 % 2 == 0) {
     const SDL_Rect r = { l.x, l.y, kBoxSize, kBoxSize };
@@ -35,7 +35,7 @@ void OverworldScreen::draw(Graphics& graphics) const {
   }
 }
 
-Screen* OverworldScreen::next_screen() {
+Screen* OverworldScreen::next_screen() const {
   const auto& l = levels_[state_.level];
 
   if (l.file.empty()) {

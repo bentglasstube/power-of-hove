@@ -13,11 +13,11 @@ bool TitleScreen::update(const Input& input, Audio&, unsigned int elapsed) {
 void TitleScreen::draw(Graphics& graphics) const {
   backdrop_.draw(graphics);
   if (SDL_GetTicks() / 500 % 2 == 0) {
-    text_.draw(graphics, "Press any key", 128, 220, Text::Alignment::CENTER);
+    text_.draw(graphics, "Press any key", 128, 220, Text::Alignment::Center);
   }
 }
 
-Screen* TitleScreen::next_screen() {
+Screen* TitleScreen::next_screen() const {
   GameState state;
   return new OverworldScreen(state);
 }

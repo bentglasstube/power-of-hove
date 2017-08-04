@@ -85,7 +85,7 @@ void LevelScreen::load_level(const std::string& level) {
   }
 }
 
-Screen* LevelScreen::next_screen() {
+Screen* LevelScreen::next_screen() const {
   if (player_.dead()) return new TitleScreen();
   else return new OverworldScreen(state_);
 }
