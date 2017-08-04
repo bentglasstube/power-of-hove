@@ -7,15 +7,15 @@ OverworldScreen::OverworldScreen(GameState state) :
   text_("text.png"), backdrop_("map.png"), state_(state) {}
 
 bool OverworldScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
-  if (input.key_pressed(SDL_SCANCODE_SPACE)) {
+  if (input.key_pressed(Input::Button::A)) {
     return false;
   }
 
-  if (input.key_pressed(SDL_SCANCODE_A) || input.key_pressed(SDL_SCANCODE_W)) {
+  if (input.key_pressed(Input::Button::Left)) {
     if (--state_.level < 0) state_.level = kLevelCount - 1;
   }
 
-  if (input.key_pressed(SDL_SCANCODE_D) || input.key_pressed(SDL_SCANCODE_S)) {
+  if (input.key_pressed(Input::Button::Right)) {
     if (++state_.level >= kLevelCount) state_.level = 0;
   }
 

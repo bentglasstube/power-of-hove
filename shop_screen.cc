@@ -13,7 +13,7 @@ bool ShopScreen::update(const Input& input, Audio& audio, unsigned int elapsed) 
     counter_ -= kTextRate;
   }
 
-  if (done() && input.key_pressed(SDL_SCANCODE_SPACE)) {
+  if (done() && input.key_pressed(Input::Button::A)) {
     index_ = counter_ = 0;
 
     switch (phase()) {

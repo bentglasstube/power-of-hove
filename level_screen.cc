@@ -10,15 +10,15 @@ LevelScreen::LevelScreen(GameState state) :
   timer_(0) {}
 
 bool LevelScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
-  if (input.key_held(SDL_SCANCODE_A)) {
+  if (input.key_held(Input::Button::Left)) {
     player_.move_left();
-  } else if (input.key_held(SDL_SCANCODE_D)) {
+  } else if (input.key_held(Input::Button::Right)) {
     player_.move_right();
   } else {
     player_.stop_moving();
   }
 
-  if (input.key_pressed(SDL_SCANCODE_SPACE)) {
+  if (input.key_pressed(Input::Button::A)) {
     player_.jump(audio);
   }
 
