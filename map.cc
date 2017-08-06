@@ -176,3 +176,5 @@ Map::Tile Map::check_tiles(int x1, int x2, int y1, int y2) const {
 
   return kNullTile;
 }
+
+const Map::Tile Map::kNullTile;

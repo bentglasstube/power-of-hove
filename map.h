@@ -43,7 +43,7 @@ class Map {
   private:
 
     static constexpr int kTileSize = 16;
-    static constexpr Tile kNullTile {};
+    static constexpr Tile kNullTile = {};
 
     GameState state_;
     SpriteMap tileset_;
