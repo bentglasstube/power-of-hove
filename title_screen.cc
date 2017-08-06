@@ -6,7 +6,7 @@
 
 TitleScreen::TitleScreen() : text_("text.png"), backdrop_("title.png") {}
 
-bool TitleScreen::update(const Input& input, Audio&, unsigned int elapsed) {
+bool TitleScreen::update(const Input& input, Audio&, unsigned int) {
   return !input.any_pressed();
 }
 

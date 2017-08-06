@@ -66,7 +66,7 @@ void Player::draw_power(Graphics& graphics, int x, int y) const {
   const int cells = std::ceil(max_power_ / kCellSize);
   for (int i = 0; i < cells; ++i) {
     const int c = std::max(0, std::min(6, (int) (6 * (power_ - i * kCellSize) / kCellSize)));
-    cells_.draw(graphics, c, 8 * i, y);
+    cells_.draw(graphics, c, 8 * i + x, y);
   }
 }
 
@@ -147,7 +147,7 @@ void Player::updatex(Audio& audio, const Map& map, unsigned int elapsed) {
   }
 }
 
-void Player::updatey(Audio& audio, const Map& map, unsigned int elapsed) {
+void Player::updatey(Audio&, const Map& map, unsigned int elapsed) {
   vy_ += kGravity * elapsed;
   grounded_ = false;
 

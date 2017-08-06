@@ -6,7 +6,7 @@
 OverworldScreen::OverworldScreen(GameState state) :
   text_("text.png"), backdrop_("map.png"), state_(state) {}
 
-bool OverworldScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
+bool OverworldScreen::update(const Input& input, Audio&, unsigned int) {
   if (input.key_pressed(Input::Button::A)) {
     return false;
   }

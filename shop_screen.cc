@@ -6,7 +6,7 @@ ShopScreen::ShopScreen(GameState state) :
   text_("text.png"), backdrop_("shopkeeper.png"),
   state_(state), counter_(0), index_(0) {}
 
-bool ShopScreen::update(const Input& input, Audio& audio, unsigned int elapsed) {
+bool ShopScreen::update(const Input& input, Audio&, unsigned int elapsed) {
   counter_ += elapsed;
   if (counter_ >= kTextRate) {
     ++index_;
