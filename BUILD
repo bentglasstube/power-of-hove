@@ -11,7 +11,7 @@ config_setting(
 )
 
 cc_binary(
-    name = "ld39",
+    name = "power-of-hove",
     data = ["//content"],
     linkopts = select({
         ":windows": [ "-mwindows", "-lSDL2main" ],
@@ -31,18 +31,18 @@ cc_binary(
 )
 
 pkg_winzip(
-    name = "ld39-windows",
+    name = "power-of-hove-windows",
     files = [
-        ":ld39",
+        ":power-of-hove",
         "//content",
     ]
 )
 
 pkg_tar(
-    name = "ld39-linux",
-    extension = "tgz",
+    name = "power-of-hove-linux",
+    extension = "tar.gz",
     files = [
-        ":ld39",
+        ":power-of-hove",
         "//content",
     ],
 )

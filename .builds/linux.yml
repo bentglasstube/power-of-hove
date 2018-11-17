@@ -1,0 +1,24 @@
+image: archlinux
+packages:
+  - bazel
+  - python
+  - rsync
+  - sdl2
+  - sdl2_image
+  - sdl2_mixer
+sources:
+  - https://git.sr.ht/~bentglasstube/power-of-hove
+environment:
+  target: 'power-of-hove-linux'
+  deploy: 'build@build.eatabrick.org:power-of-hove'
+secrets:
+  - 7a7c0309-95bb-4107-9e42-96352295d661
+tasks:
+  - build: |
+      cd power-of-hove
+      bazel build -c opt :"$target"
+  - deploy: |
+      cd power-of-hove
+      version=$(git describe --tags)
+      sshopts="ssh -o StrictHostKeyChecking=no"
+      rsync --rsh="$sshopts" -rP bazel-bin/"$target".tar.gz "$deploy"/"$target"-"$version".tgz
