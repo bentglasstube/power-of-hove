@@ -41,6 +41,8 @@ pkg_winzip(
 pkg_tar(
     name = "power-of-hove-linux",
     extension = "tar.gz",
+    strip_prefix = "/",
+    package_dir = "power-of-hove/",
     files = [
         ":power-of-hove",
         "//content",
