@@ -1,22 +1,9 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@bazel_tools//tools/build_defs/pkg:pkg.bzl", "pkg_tar")
-load("@mxebzl//tools/windows:rules.bzl", "pkg_winzip")
-
-config_setting(
-    name = "windows",
-    values = {
-        "crosstool_top": "@mxebzl//tools/windows:toolchain",
-    }
-)
-
 cc_binary(
     name = "power-of-hove",
     data = ["//content"],
-    linkopts = select({
-        ":windows": [ "-mwindows", "-lSDL2main" ],
-        "//conditions:default": [],
-    }) + [
+    linkopts = [
         "-lSDL2",
         "-lSDL2_image",
         "-lSDL2_mixer",
@@ -27,25 +14,6 @@ cc_binary(
     deps = [
         "@libgam//:game",
         ":screens",
-    ],
-)
-
-pkg_winzip(
-    name = "power-of-hove-windows",
-    files = [
-        ":power-of-hove",
-        "//content",
-    ]
-)
-
-pkg_tar(
-    name = "power-of-hove-linux",
-    extension = "tar.gz",
-    strip_prefix = "/",
-    package_dir = "power-of-hove/",
-    files = [
-        ":power-of-hove",
-        "//content",
     ],
 )
 

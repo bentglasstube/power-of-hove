@@ -1,0 +1,9 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=Power of Hove
+Terminal=false
+Icon=icon
+Exec=power-of-hove
+Categories=Game;
