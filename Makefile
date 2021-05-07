@@ -15,7 +15,7 @@ CC=$(CROSS)g++
 LD=$(CROSS)ld
 AR=$(CROSS)ar
 PKG_CONFIG=$(CROSS)pkg-config
-CFLAGS=-O3 --std=c++14 -Wall -Wextra -Werror -pedantic -I gam -DNDEBUG
+CFLAGS=-O3 --std=c++17 -Wall -Wextra -Werror -pedantic -I gam -DNDEBUG
 EMFLAGS=-s USE_SDL=2 -s USE_SDL_MIXER=2 -s USE_SDL_IMAGE=2 -s SDL2_IMAGE_FORMATS='["png"]' -s USE_OGG=1 -s USE_VORBIS=1 -s ALLOW_MEMORY_GROWTH=1 -fno-rtti -fno-exceptions
 EXTRA=
 
@@ -52,8 +52,8 @@ echo:
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(LDLIBS)
+$(EXECUTABLE): $(OBJECTS) $(EXTRA)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJECTS) $(EXTRA) $(LDLIBS)
 
 $(BUILDDIR)/%.o: %.cc
 	@mkdir -p $(BUILDDIR)/gam
@@ -130,6 +130,5 @@ distclean: clean
 	rm -rf *.AppDir *.AppImage
 	rm -rf *.html *.js *.data *.wasm
 	rm -rf *-web-*/ *output/
-
 
 .PHONY: all echo clean distclean run package wasm web
