@@ -89,7 +89,3 @@ Screen* LevelScreen::next_screen() const {
   if (player_.dead()) return new TitleScreen();
   else return new OverworldScreen(state_);
 }
-
-std::string LevelScreen::get_music_track() const {
-  return "";
-}
